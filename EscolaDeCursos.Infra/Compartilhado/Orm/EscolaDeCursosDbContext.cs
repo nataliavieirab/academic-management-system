@@ -1,6 +1,6 @@
 using System.Reflection;
+using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
 using Microsoft.EntityFrameworkCore;
-
 namespace EscolaDeCursos.Infra.Compartilhado.Orm;
 
 public sealed class EscolaDeCursosDbContext(
@@ -9,7 +9,7 @@ public sealed class EscolaDeCursosDbContext(
     // public DbSet<Curso> Cursos => Set<Curso>();
     // public DbSet<Instrutor> Instrutores => Set<Instrutor>();
     // public DbSet<ModuloCurso> ModulosDoCurso => Set<ModuloCurso>();
-    // public DbSet<Categoria> Categorias => Set<Categoria>();
+    public DbSet<Categoria> Categorias => Set<Categoria>();
     // public DbSet<Turma> Turmas => Set<Turma>();
     // public DbSet<Matricula> Matriculas => Set<Matricula>();
     // public DbSet<Aluno> Alunos => Set<Aluno>();
