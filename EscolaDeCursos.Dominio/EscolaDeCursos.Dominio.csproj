@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Modulos/" />
+    <Folder Include="Modulos/ModuloAluno/" />
+    <Folder Include="Modulos/ModuloCategoria/" />
+    <Folder Include="Modulos/ModuloCurso/" />
+    <Folder Include="Modulos/ModuloInstrutor/" />
+    <Folder Include="Modulos/ModuloMatricula/" />
+    <Folder Include="Modulos/ModuloTurma/" />
+  </ItemGroup>
+
 </Project>
