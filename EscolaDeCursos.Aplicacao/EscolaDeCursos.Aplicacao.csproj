@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>ad4016f9-63ad-4aa4-a292-ed1b5b1ff099</UserSecretsId>
   </PropertyGroup>
 
 
@@ -16,6 +17,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="../EscolaDeCursos.Infra/EscolaDeCursos.Infra.csproj" />
     <ProjectReference Include="..\EscolaDeCursos.Dominio\EscolaDeCursos.Dominio.csproj" />
   </ItemGroup>
 
