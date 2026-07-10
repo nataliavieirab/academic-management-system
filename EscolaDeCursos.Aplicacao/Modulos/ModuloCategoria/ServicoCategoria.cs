@@ -6,23 +6,11 @@ namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
 public class ServicoCategoria : ServicoBase<Categoria>
 {
     private readonly IRepositorioCategoria repositorioCategoria;
-
     public ServicoCategoria(
         IRepositorioCategoria repositorioCategoria
     )
     {
         this.repositorioCategoria = repositorioCategoria;
-    }
-
-    public List<ListarCategoriasDto> SelecionarTodos()
-    {
-        return repositorioCategoria
-            .SelecionarTodos()
-            .Select(c => new ListarCategoriasDto(
-                c.Id,
-                c.Titulo
-            ))
-            .ToList();
     }
 
     public Result Cadastrar(CadastrarCategoriaDto dto)
@@ -40,6 +28,47 @@ public class ServicoCategoria : ServicoBase<Categoria>
         repositorioCategoria.Cadastrar(novaCategoria);
 
         return Result.Ok();
+    }
+
+    public Result Editar(EditarCategoriaDto dto)
+    {
+        if (ExisteCategoriaComMesmoTitulo(dto.Titulo, dto.Id))
+            return Falha(nameof(dto.Titulo), "Já existe uma categoria com este título.");
+
+        Categoria categoriaAtualizada = new Categoria(dto.Titulo);
+
+        Result resultadoValidacao = ValidarEntidade(categoriaAtualizada);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        bool conseguiuEditar = repositorioCategoria.Editar(dto.Id, categoriaAtualizada);
+
+        if (!conseguiuEditar)
+            return Falha(string.Empty, "Categoria não encontrada.");
+
+        return Result.Ok();
+    }
+
+    public List<ListarCategoriasDto> SelecionarTodos()
+    {
+        return repositorioCategoria
+            .SelecionarTodos()
+            .Select(c => new ListarCategoriasDto(
+                c.Id,
+                c.Titulo
+            ))
+            .ToList();
+    }
+
+    public Result<DetalhesCategoriaDto> SelecionarPorId(Guid id)
+    {
+        Categoria? categoria = repositorioCategoria.SelecionarPorId(id);
+
+        if (categoria == null)
+            return Result.Fail("Categoria não encontrada.");
+
+        return Result.Ok(new DetalhesCategoriaDto(categoria.Id, categoria.Titulo));
     }
 
     private bool ExisteCategoriaComMesmoTitulo(string titulo, Guid? idIgnorado = null)
