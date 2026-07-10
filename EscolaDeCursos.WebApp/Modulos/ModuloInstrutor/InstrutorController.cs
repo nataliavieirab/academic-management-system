@@ -50,4 +50,42 @@ public class InstrutorController(ServicoInstrutor servicoInstrutor, IMapper mape
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Editar(Guid id)
+    {
+        Result<DetalhesInstrutorDto> resultado = servicoInstrutor.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarInstrutorViewModel editarVm = mapeador.Map<EditarInstrutorViewModel>(resultado.Value);
+
+        return View(editarVm);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(EditarInstrutorViewModel editarVm)
+    {
+        if (!ModelState.IsValid)
+            return View(editarVm);
+
+        EditarInstrutorDto dto = mapeador.Map<EditarInstrutorDto>(editarVm);
+
+        Result resultado = servicoInstrutor.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            return View(editarVm);
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
+
 }

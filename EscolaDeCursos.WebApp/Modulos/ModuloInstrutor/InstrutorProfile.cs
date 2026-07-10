@@ -8,8 +8,8 @@ public class InstrutorProfile : Profile
     {
         CreateMap<ListarInstrutoresDto, ListarInstrutoresViewModel>();
         CreateMap<CadastrarInstrutorViewModel, CadastrarInstrutorDto>();
-        // CreateMap<EditarInstrutorViewModel, EditarInstrutorDto>();
-        // CreateMap<DetalhesInstrutorDto, EditarInstrutorViewModel>();
+        CreateMap<EditarInstrutorViewModel, EditarInstrutorDto>();
+        CreateMap<DetalhesInstrutorDto, EditarInstrutorViewModel>();
         // CreateMap<DetalhesInstrutorDto, ExcluirInstrutorViewModel>();
     }
 }

@@ -15,6 +15,14 @@ public record CadastrarInstrutorDto(
     string Email
 );
 
+public record EditarInstrutorDto(
+    Guid Id,
+    string Nome,
+    string Cpf,
+    string Telefone,
+    string Email
+);
+
 public record DetalhesInstrutorDto(
     Guid Id,
     string Nome,

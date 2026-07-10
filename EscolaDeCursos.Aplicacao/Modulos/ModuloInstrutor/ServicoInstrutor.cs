@@ -39,6 +39,39 @@ public class ServicoInstrutor : ServicoBase<Instrutor>
         return Result.Ok();
     }
 
+    public Result Editar(EditarInstrutorDto dto)
+    {
+        Instrutor? instrutor = repositorioInstrutor.SelecionarPorId(dto.Id);
+
+        if (instrutor == null)
+            return Result.Fail("Instrutor não encontrado.");
+
+        string cpfNormalizado = NormalizarCpf(dto.Cpf);
+        string emailNormalizado = NormalizarEmail(dto.Email);
+
+        if (ExisteInstrutorComMesmoCpf(cpfNormalizado, dto.Id))
+            return Falha(nameof(dto.Cpf), "Já existe um instrutor com esse CPF.");
+
+        if (ExisteInstrutorComMesmoEmail(emailNormalizado, dto.Id))
+            return Falha(nameof(dto.Email), "Já existe um instrutor com esse e-mail.");
+
+        Instrutor instrutorAtualizado = new Instrutor(
+            dto.Nome,
+            dto.Cpf,
+            dto.Telefone,
+            dto.Email
+        );
+
+        Result resultadoValidacao = ValidarEntidade(instrutorAtualizado);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioInstrutor.Editar(dto.Id, instrutorAtualizado);
+
+        return Result.Ok();
+    }
+
     private string NormalizarCpf(string cpf)
     {
         return new string(cpf.Where(char.IsDigit).ToArray());
