@@ -1,0 +1,64 @@
+@{
+Layout = "_Layout";
+ViewBag.Titulo = "👨‍🏫 Instrutores";
+ViewBag.Info = "Cadastre, visualize e gerencie instrutores.";
+ViewBag.TextoBotao = "Cadastrar Instrutor";
+ViewBag.ControllerBotao = "Instrutor";
+ViewBag.ActionBotao = "Cadastrar";
+}
+
+@model List<ListarInstrutoresViewModel>;
+
+    @if (TempData["MensagemErro"] is string mensagemErro)
+    {
+    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
+        @mensagemErro
+    </div>
+    }
+
+    @if (Model.Count == 0)
+    {
+    <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
+        Nenhum instrutor cadastrado.
+    </div>
+    }
+    else
+    {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+        @foreach (ListarInstrutoresViewModel i in Model)
+        {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <h5 class="card-title fw-semibold text-dark medium">@i.Nome</h5>
+                    </div>
+                    <hr class="my-1">
+
+                    <dl class="row g-2 mb-4 mt-2">
+                        <dt class="col-4 text-secondary fw-bold">CPF:</dt>
+                        <dd class="col-8 mb-0 text-break">@i.Cpf</dd>
+
+                        <dt class="col-4 text-secondary fw-bold">Telefone</dt>
+                        <dd class="col-8 mb-0 text-break">
+                            @i.Telefone
+                        </dd>
+
+                        <dt class="col-4 text-secondary fw-bold">E-mail:</dt>
+                        <dd class="col-8 mb-0 text-break">@i.Email</dd>
+                    </dl>
+
+                    <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
+                        <a asp-action="editar" asp-route-id="@i.Id" class="btn btn-primary" title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a asp-action="excluir" asp-route-id="@i.Id" class="btn btn-danger" title="Excluir">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
