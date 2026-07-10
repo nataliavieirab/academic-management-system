@@ -8,8 +8,8 @@ public class AlunoProfile : Profile
     {
         CreateMap<ListarAlunosDto, ListarAlunosViewModel>();
         CreateMap<CadastrarAlunoViewModel, CadastrarAlunoDto>();
-        // CreateMap<EditarAlunoViewModel, EditarAlunoDto>();
-        // CreateMap<DetalhesAlunoDto, EditarAlunoViewModel>();
+        //CreateMap<EditarAlunoViewModel, EditarAlunoDto>();
+        //CreateMap<DetalhesAlunoDto, EditarAlunoViewModel>();
         // CreateMap<DetalhesAlunoDto, ExcluirAlunoViewModel>();
     }
 }
