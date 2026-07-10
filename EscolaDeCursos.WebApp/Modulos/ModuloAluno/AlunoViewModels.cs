@@ -56,3 +56,12 @@ public record EditarAlunoViewModel(
     [StringLength(100, MinimumLength = 2, ErrorMessage = "O campo \"Endereço\" deve conter entre 2 e 100 caracteres.")]
     string Endereco
 );
+
+public record ExcluirAlunoViewModel(
+    Guid Id,
+    string Nome,
+    string Cpf,
+    string Telefone,
+    string Email,
+    string Endereco
+);

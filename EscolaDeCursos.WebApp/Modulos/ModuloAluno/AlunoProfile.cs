@@ -10,6 +10,6 @@ public class AlunoProfile : Profile
         CreateMap<CadastrarAlunoViewModel, CadastrarAlunoDto>();
         CreateMap<EditarAlunoViewModel, EditarAlunoDto>();
         CreateMap<DetalhesAlunoDto, EditarAlunoViewModel>();
-        // CreateMap<DetalhesAlunoDto, ExcluirAlunoViewModel>();
+        CreateMap<DetalhesAlunoDto, ExcluirAlunoViewModel>();
     }
 }

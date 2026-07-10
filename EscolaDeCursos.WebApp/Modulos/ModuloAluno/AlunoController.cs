@@ -87,4 +87,33 @@ public class AlunoController(ServicoAluno servicoAluno, IMapper mapeador) : Cont
 
         return RedirectToAction(nameof(Listar));
     }
+
+
+    [HttpGet]
+    public ActionResult Excluir(Guid id)
+    {
+        Result<DetalhesAlunoDto> resultado = servicoAluno.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirAlunoViewModel excluirVm = mapeador.Map<ExcluirAlunoViewModel>(resultado.Value);
+
+        return View(excluirVm);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirAlunoViewModel excluirVm)
+    {
+        Result resultado = servicoAluno.Excluir(excluirVm.Id);
+
+        if (resultado.IsFailed)
+            TempData.AddErrorMessage(resultado);
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

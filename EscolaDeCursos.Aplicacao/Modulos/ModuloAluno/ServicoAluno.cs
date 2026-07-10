@@ -74,6 +74,18 @@ public class ServicoAluno : ServicoBase<Aluno>
         return Result.Ok();
     }
 
+    public Result Excluir(Guid id)
+    {
+        Aluno? aluno = repositorioAluno.SelecionarPorId(id);
+
+        if (aluno == null)
+            return Result.Fail("Aluno não encontrado.");
+
+        repositorioAluno.Excluir(id);
+
+        return Result.Ok();
+    }
+
     private string NormalizarCpf(string cpf)
     {
         return new string(cpf.Where(char.IsDigit).ToArray());
