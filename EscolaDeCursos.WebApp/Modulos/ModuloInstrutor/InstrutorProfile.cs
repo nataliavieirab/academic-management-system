@@ -10,6 +10,6 @@ public class InstrutorProfile : Profile
         CreateMap<CadastrarInstrutorViewModel, CadastrarInstrutorDto>();
         CreateMap<EditarInstrutorViewModel, EditarInstrutorDto>();
         CreateMap<DetalhesInstrutorDto, EditarInstrutorViewModel>();
-        // CreateMap<DetalhesInstrutorDto, ExcluirInstrutorViewModel>();
+        CreateMap<DetalhesInstrutorDto, ExcluirInstrutorViewModel>();
     }
 }

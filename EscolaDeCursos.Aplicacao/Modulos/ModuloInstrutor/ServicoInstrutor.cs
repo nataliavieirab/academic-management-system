@@ -72,6 +72,18 @@ public class ServicoInstrutor : ServicoBase<Instrutor>
         return Result.Ok();
     }
 
+    public Result Excluir(Guid id)
+    {
+        Instrutor? instrutor = repositorioInstrutor.SelecionarPorId(id);
+
+        if (instrutor == null)
+            return Result.Fail("Instrutor não encontrado.");
+
+        repositorioInstrutor.Excluir(id);
+
+        return Result.Ok();
+    }
+
     private string NormalizarCpf(string cpf)
     {
         return new string(cpf.Where(char.IsDigit).ToArray());

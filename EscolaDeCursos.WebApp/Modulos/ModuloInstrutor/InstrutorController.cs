@@ -88,4 +88,32 @@ public class InstrutorController(ServicoInstrutor servicoInstrutor, IMapper mape
         return RedirectToAction(nameof(Listar));
     }
 
+    [HttpGet]
+    public ActionResult Excluir(Guid id)
+    {
+        Result<DetalhesInstrutorDto> resultado = servicoInstrutor.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirInstrutorViewModel excluirVm = mapeador.Map<ExcluirInstrutorViewModel>(resultado.Value);
+
+        return View(excluirVm);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirInstrutorViewModel excluirVm)
+    {
+        Result resultado = servicoInstrutor.Excluir(excluirVm.Id);
+
+        if (resultado.IsFailed)
+            TempData.AddErrorMessage(resultado);
+
+        return RedirectToAction(nameof(Listar));
+    }
+
 }

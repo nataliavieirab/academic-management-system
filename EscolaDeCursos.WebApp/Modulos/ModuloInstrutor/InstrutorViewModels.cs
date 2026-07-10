@@ -47,3 +47,11 @@ public record EditarInstrutorViewModel(
     [EmailAddress(ErrorMessage = "O campo \"Email\" possui formato inválido.")]
     string Email
 );
+
+public record ExcluirInstrutorViewModel(
+    Guid Id,
+    string Nome,
+    string Cpf,
+    string Telefone,
+    string Email
+);

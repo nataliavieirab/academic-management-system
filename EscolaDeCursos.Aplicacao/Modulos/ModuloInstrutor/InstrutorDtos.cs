@@ -23,6 +23,14 @@ public record EditarInstrutorDto(
     string Email
 );
 
+public record ExcluirInstrutorDto(
+    Guid Id,
+    string Nome,
+    string Cpf,
+    string Telefone,
+    string Email
+);
+
 public record DetalhesInstrutorDto(
     Guid Id,
     string Nome,
