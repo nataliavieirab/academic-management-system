@@ -1,0 +1,68 @@
+@{
+Layout = "_Layout";
+ViewBag.Titulo = "👥 Turmas";
+ViewBag.Info = "Cadastre, visualize e gerencie turmas.";
+ViewBag.TextoBotao = "Cadastrar Turma";
+ViewBag.ControllerBotao = "Turma";
+ViewBag.ActionBotao = "Cadastrar";
+}
+
+@model List<ListarTurmasViewModel>;
+
+    @if (TempData["MensagemErro"] is string mensagemErro)
+    {
+    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
+        @mensagemErro
+    </div>
+    }
+
+    @if (Model.Count == 0)
+    {
+    <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
+        Nenhuma turma cadastrada.
+    </div>
+    }
+    else
+    {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+        @foreach (ListarTurmasViewModel t in Model)
+        {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <h5 class="card-title fw-semibold text-dark medium">@t.Nome</h5>
+                    </div>
+                    <hr class="my-1">
+
+                    <dl class="row g-2 mb-4 mt-2">
+                        @* <dt class="col-4 text-secondary fw-bold">Curso:</dt>
+                        <dd class="col-8 mb-0 text-break">@t.CursoNome</dd> *@
+
+                        <dt class="col-4 text-secondary fw-bold">Instrutor:</dt>
+                        <dd class="col-8 mb-0 text-break">@t.InstrutorNome</dd>
+
+                        <dt class="col-4 text-secondary fw-bold">Capacidade:</dt>
+                        <dd class="col-8 mb-0">@t.CapacidadeMaxima</dd>
+
+                        <dt class="col-4 text-secondary fw-bold">Início:</dt>
+                        <dd class="col-8 mb-0">@t.DataInicio.ToString("dd/MM/yyyy")</dd>
+
+                        <dt class="col-4 text-secondary fw-bold">Término:</dt>
+                        <dd class="col-8 mb-0">@t.DataTermino.ToString("dd/MM/yyyy")</dd>
+                    </dl>
+
+                    <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
+                        <a asp-action="Editar" asp-route-id="@t.Id" class="btn btn-primary" title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a asp-action="Excluir" asp-route-id="@t.Id" class="btn btn-danger" title="Excluir">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
