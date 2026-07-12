@@ -1,91 +1,68 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
+using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using FluentResults;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
 
 public class ServicoTurma : ServicoBase<Turma>
 {
-    private readonly IRepositorioTurma repositorioTurma;
+    private readonly IRepositorioTurma _repositorioTurma;
+    private readonly IRepositorioInstrutor _repositorioInstrutor;
 
     public ServicoTurma(
-        IRepositorioTurma repositorioTurma
+        IRepositorioTurma repositorioTurma,
+        IRepositorioInstrutor repositorioInstrutor
     )
     {
-        this.repositorioTurma = repositorioTurma;
+        _repositorioTurma = repositorioTurma;
+        _repositorioInstrutor = repositorioInstrutor;
     }
 
-    // public Result Cadastrar(CadastrarTurmaDto dto)
-    // {
-    //     Turma novaTurma = new Turma(
-    //         dto.Nome,
-    //         dto.CursoNome,          
-    //         dto.InstrutorNome,      
-    //         dto.CapacidadeMaxima,
-    //         dto.DataInicio,
-    //         dto.DataTermino
-    //     );
+    public Result Cadastrar(CadastrarTurmaDto dto)
+    {
+        Instrutor? instrutorSelecionado = null;
 
-    //     Result resultadoValidacao = ValidarEntidade(novaTurma);
+        if (dto.InstrutorId.HasValue)
+        {
+            instrutorSelecionado = _repositorioInstrutor.SelecionarPorId(dto.InstrutorId.Value);
 
-    //     if (resultadoValidacao.IsFailed)
-    //         return resultadoValidacao;
+            if (instrutorSelecionado is null)
+                return Falha(nameof(dto.InstrutorId), "Selecione um instrutor válido.");
+        }
+        else
+        {
+            return Falha(nameof(dto.InstrutorId), "Selecione um instrutor válido.");
+        }
 
-    //     repositorioTurma.Cadastrar(novaTurma);
+        if (dto.DataInicio >= dto.DataTermino)
+            return Falha(nameof(dto.DataInicio), "A data de início deve ser anterior à data de término.");
 
-    //     return Result.Ok();
-    // }
+        Turma novaTurma = new Turma(
+            dto.Nome,
+            instrutorSelecionado,
+            dto.CapacidadeMaxima,
+            dto.DataInicio,
+            dto.DataTermino
+        );
 
+        Result resultadoValidacao = ValidarEntidade(novaTurma);
 
-    // public Result Editar(EditarTurmaDto dto)
-    // {
-    //     Turma? turma = repositorioTurma.SelecionarPorId(dto.Id);
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
 
-    //     if (turma == null)
-    //         return Result.Fail("Turma não encontrada.");
+        _repositorioTurma.Cadastrar(novaTurma);
 
-    //     Turma turmaAtualizada = new Turma(
-    //         dto.Nome,
-    //         dto.Curso,
-    //         dto.Instrutor,
-    //         dto.CapacidadeMaxima,
-    //         dto.DataInicio,
-    //         dto.DataTermino
-    //     );
-
-    //     Result resultadoValidacao = ValidarEntidade(turmaAtualizada);
-
-    //     if (resultadoValidacao.IsFailed)
-    //         return resultadoValidacao;
-
-    //     repositorioTurma.Editar(dto.Id, turmaAtualizada);
-
-    //     return Result.Ok();
-    // }
-
-    // public Result Excluir(Guid id)
-    // {
-    //     Turma? turma = repositorioTurma.SelecionarPorId(id);
-
-    //     if (turma == null)
-    //         return Result.Fail("Turma não encontrada.");
-
-    //     if (turma.Alunos.Any())
-    //         return Result.Fail("Não é permitido excluir turmas com alunos matriculados.");
-
-    //     repositorioTurma.Excluir(id);
-
-    //     return Result.Ok();
-    // }
+        return Result.Ok();
+    }
 
     public List<ListarTurmasDto> SelecionarTodos()
     {
-        return repositorioTurma
+        return _repositorioTurma
             .SelecionarTodos()
             .Select(t => new ListarTurmasDto(
                 t.Id,
                 t.Nome,
-                // t.Curso.Nome,
-                t.Instrutor.Nome,
+                t.Instrutor?.Nome,
                 t.CapacidadeMaxima,
                 t.DataInicio,
                 t.DataTermino
@@ -95,7 +72,7 @@ public class ServicoTurma : ServicoBase<Turma>
 
     public Result<DetalhesTurmaDto> SelecionarPorId(Guid id)
     {
-        Turma? turma = repositorioTurma.SelecionarPorId(id);
+        Turma? turma = _repositorioTurma.SelecionarPorId(id);
 
         if (turma == null)
             return Result.Fail("Turma não encontrada.");
@@ -104,8 +81,8 @@ public class ServicoTurma : ServicoBase<Turma>
             new DetalhesTurmaDto(
                 turma.Id,
                 turma.Nome,
-                // turma.Curso.Nome,
-                turma.Instrutor.Nome,
+                turma.Instrutor?.Id,
+                turma.Instrutor?.Nome,
                 turma.CapacidadeMaxima,
                 turma.DataInicio,
                 turma.DataTermino
@@ -113,4 +90,16 @@ public class ServicoTurma : ServicoBase<Turma>
         );
     }
 
+    public List<OpcaoInstrutorDto> SelecionarInstrutor()
+    {
+        return _repositorioInstrutor
+            .SelecionarTodos()
+            .Select(i => new OpcaoInstrutorDto(i.Id, i.Nome))
+            .ToList();
+    }
+
+    private new static Result Falha(string campo, string mensagem)
+    {
+        return Result.Fail(new Error(mensagem).WithMetadata("Campo", campo));
+    }
 }

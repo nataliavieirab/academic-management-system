@@ -1,5 +1,6 @@
 using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using EscolaDeCursos.Infra.Compartilhado.Orm;
+using Microsoft.EntityFrameworkCore;
 
 namespace EscolaDeCursos.Infra.Modulos.ModuloTurma;
 
@@ -8,6 +9,9 @@ public sealed class RepositorioTurma(EscolaDeCursosDbContext dbContext) :
 {
     public override List<Turma> SelecionarTodos()
     {
-        return registros.OrderBy(a => a.Nome).ToList();
+        return registros
+    .Include(t => t.Instrutor)
+    .OrderBy(t => t.Nome)
+    .ToList();
     }
 }

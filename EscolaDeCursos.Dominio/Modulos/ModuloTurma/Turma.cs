@@ -9,8 +9,8 @@ namespace EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 public class Turma : EntidadeBase<Turma>
 {
     public string Nome { get; set; } = string.Empty;
-    // public Curso? Curso { get; set; } = null!;
-    public Instrutor? Instrutor { get; set; } = null!;
+    // public Curso? Curso { get; set; } = null;
+    public Instrutor? Instrutor { get; set; } = null;
     public List<Aluno> Alunos { get; set; } = new List<Aluno>();
     public int CapacidadeMaxima { get; set; }
     public DateOnly DataInicio { get; set; }
@@ -20,7 +20,7 @@ public class Turma : EntidadeBase<Turma>
     {
     }
 
-    public Turma(string nome, Instrutor instrutor, int capacidadeMaxima, DateOnly dataInicio, DateOnly dataTermino)
+    public Turma(string nome, Instrutor? instrutor, int capacidadeMaxima, DateOnly dataInicio, DateOnly dataTermino)
     {
         Nome = nome;
         // Curso = curso;

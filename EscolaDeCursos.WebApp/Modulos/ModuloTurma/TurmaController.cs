@@ -1,5 +1,7 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
+using EscolaDeCursos.WebApp.Compartilhado.Extensions;
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma;
@@ -13,6 +15,64 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
         List<ListarTurmasViewModel> listarVms = mapeador.Map<List<ListarTurmasViewModel>>(dtos);
 
         return View(listarVms);
+    }
+
+    [HttpGet]
+    public ActionResult Cadastrar()
+    {
+        CadastrarTurmaViewModel cadastrarVm = new CadastrarTurmaViewModel(
+            string.Empty,
+            Guid.Empty,
+            0,
+            DateOnly.FromDateTime(DateTime.Today),
+            DateOnly.FromDateTime(DateTime.Today.AddMonths(1)),
+            SelecionarInstrutor()
+        );
+
+        return View(cadastrarVm);
+    }
+
+    [HttpPost]
+    public ActionResult Cadastrar(CadastrarTurmaViewModel cadastrarVm)
+    {
+
+        // if (!ModelState.IsValid)
+        //     return View(cadastrarVm with { Curso = SelecionarCurso() });
+        if (!ModelState.IsValid)
+            return View(cadastrarVm with { Instrutores = SelecionarInstrutor() });
+
+        CadastrarTurmaDto dto = mapeador.Map<CadastrarTurmaDto>(cadastrarVm);
+        Result resultado = servicoTurma.Cadastrar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            return View(cadastrarVm with { Instrutores = SelecionarInstrutor() });
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
+
+
+    // private List<OpcaoCursoViewModel> SelecionarCurso()
+    // {
+    //     List<OpcaoCursoDto> dtos = servicoTurma.SelecionarCurso();
+
+    //     return mapeador.Map<List<OpcaoCursoViewModel>>(dtos);
+    // }
+
+    private List<OpcaoInstrutorViewModel> SelecionarInstrutor()
+    {
+        try
+        {
+            List<OpcaoInstrutorDto> dtos = servicoTurma.SelecionarInstrutor();
+            return mapeador.Map<List<OpcaoInstrutorViewModel>>(dtos);
+        }
+        catch
+        {
+            return new List<OpcaoInstrutorViewModel>();
+        }
     }
 
 }
