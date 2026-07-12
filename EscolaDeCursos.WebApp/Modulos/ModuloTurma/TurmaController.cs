@@ -75,4 +75,48 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
         }
     }
 
+    [HttpGet]
+    public ActionResult Editar(Guid id)
+    {
+        Result<DetalhesTurmaDto> resultado = servicoTurma.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData["MensagemErro"] = "Turma não encontrada.";
+            return RedirectToAction(nameof(Listar));
+        }
+
+        DetalhesTurmaDto dto = resultado.Value;
+        EditarTurmaViewModel editarVm = new EditarTurmaViewModel(
+            dto.Id,
+            dto.Nome,
+            dto.InstrutorId,
+            dto.CapacidadeMaxima,
+            dto.DataInicio,
+            dto.DataTermino,
+            SelecionarInstrutor()
+        );
+
+        return View(editarVm);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(EditarTurmaViewModel editarVm)
+    {
+        if (!ModelState.IsValid)
+            return View(editarVm with { Instrutores = SelecionarInstrutor() });
+
+        EditarTurmaDto dto = mapeador.Map<EditarTurmaDto>(editarVm);
+        Result resultado = servicoTurma.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+            return View(editarVm with { Instrutores = SelecionarInstrutor() });
+        }
+
+        TempData["MensagemSucesso"] = "Turma atualizada com sucesso.";
+        return RedirectToAction(nameof(Listar));
+    }
+
 }

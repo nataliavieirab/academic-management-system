@@ -8,7 +8,7 @@ public class TurmaProfile : Profile
     {
         CreateMap<ListarTurmasDto, ListarTurmasViewModel>();
         CreateMap<CadastrarTurmaViewModel, CadastrarTurmaDto>();
-        // CreateMap<EditarTurmaViewModel, EditarTurmaDto>();
+        CreateMap<EditarTurmaViewModel, EditarTurmaDto>();
         // CreateMap<DetalhesTurmaDto, EditarTurmaViewModel>();
         // CreateMap<DetalhesTurmaDto, ExcluirTurmaViewModel>();
 

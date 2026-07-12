@@ -55,6 +55,48 @@ public class ServicoTurma : ServicoBase<Turma>
         return Result.Ok();
     }
 
+    public Result Editar(EditarTurmaDto dto)
+    {
+        Turma? turma = _repositorioTurma.SelecionarPorId(dto.Id);
+
+        if (turma is null)
+            return Falha(nameof(dto.Id), "Turma não encontrada.");
+
+        Instrutor? instrutorSelecionado = null;
+
+        if (dto.InstrutorId.HasValue)
+        {
+            instrutorSelecionado = _repositorioInstrutor.SelecionarPorId(dto.InstrutorId.Value);
+
+            if (instrutorSelecionado is null)
+                return Falha(nameof(dto.InstrutorId), "Selecione um instrutor válido.");
+        }
+        else
+        {
+            return Falha(nameof(dto.InstrutorId), "Selecione um instrutor válido.");
+        }
+
+        if (dto.DataInicio >= dto.DataTermino)
+            return Falha(nameof(dto.DataInicio), "A data de início deve ser anterior à data de término.");
+
+        Turma turmaAtualizada = new Turma(
+            dto.Nome,
+            instrutorSelecionado,
+            dto.CapacidadeMaxima,
+            dto.DataInicio,
+            dto.DataTermino
+        );
+
+        Result resultadoValidacao = ValidarEntidade(turmaAtualizada);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        _repositorioTurma.Editar(dto.Id, turmaAtualizada);
+
+        return Result.Ok();
+    }
+
     public List<ListarTurmasDto> SelecionarTodos()
     {
         return _repositorioTurma
