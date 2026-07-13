@@ -32,7 +32,7 @@ public record DetalhesCursoDto(
     string Titulo,
     string Descricao,
     Guid CategoriaId,
-    string Categoria,
+    string CategoriaTitulo,
     Nivel Nivel,
     int CargaHoraria
 );

@@ -76,6 +76,19 @@ public class ServicoCurso : ServicoBase<Curso>
 
         return Result.Ok();
     }
+
+    public Result Excluir(Guid id)
+    {
+        Curso? Curso = repositorioCurso.SelecionarPorId(id);
+
+        if (Curso == null)
+            return Falha(string.Empty, "Curso não encontrado.");
+
+        repositorioCurso.Excluir(id);
+
+        return Result.Ok();
+    }
+
     public List<ListarCursosDto> SelecionarTodos()
     {
         return repositorioCurso
@@ -108,6 +121,7 @@ public class ServicoCurso : ServicoBase<Curso>
             curso.CargaHoraria
         ));
     }
+
     private bool ExisteCursoComMesmoTitulo(string titulo, Guid? idIgnorado = null)
     {
         string tituloNormalizado = NormalizarTitulo(titulo);
