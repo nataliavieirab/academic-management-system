@@ -47,7 +47,8 @@ else
             </dl>
 
             <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-              <a asp-controller="Modulo" asp-action="Listar" asp-route-id="@c.Id" class="btn btn-outline-dark" title="Módulos">
+              <a asp-controller="Modulo" asp-action="Listar" asp-route-cursoId="@c.Id" class="btn btn-outline-dark"
+                 title="Módulos">
                 <i class="bi bi-list-ol"></i> Módulos
               </a>
               <a asp-action="editar" asp-route-id="@c.Id" class="btn btn-primary" title="Editar">

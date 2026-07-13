@@ -5,7 +5,6 @@ using EscolaDeCursos.WebApp.Compartilhado.Extensions;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
 namespace EscolaDeCursos.WebApp.Modulos.ModuloCurso;
 
 public class CursoController(
@@ -103,7 +102,6 @@ public class CursoController(
         return RedirectToAction(nameof(Listar));
     }
 
-
     [HttpGet]
     public ActionResult Excluir(Guid id)
     {
@@ -131,6 +129,7 @@ public class CursoController(
 
         return RedirectToAction(nameof(Listar));
     }
+
     private List<SelectListItem> ObterCategoriasDisponiveis()
     {
         return servicoCategoria

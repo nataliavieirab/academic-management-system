@@ -22,4 +22,8 @@
     <ProjectReference Include="..\EscolaDeCursos.Dominio\EscolaDeCursos.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modulos/ModuloCurso/ModuloModulo/" />
+  </ItemGroup>
+
 </Project>

@@ -16,6 +16,7 @@ public static class InjecaoDependencia
 
             options.ViewLocationFormats.Add("/Modulos/Modulo{1}/Views/{0}.cshtml");
             options.ViewLocationFormats.Add("/Compartilhado/Views/{0}.cshtml");
+            options.ViewLocationFormats.Add("/Modulos/ModuloCurso/Modulo{1}/Views/{0}.cshtml");
         });
 
         services.AddAutoMapper(mapperConfig =>

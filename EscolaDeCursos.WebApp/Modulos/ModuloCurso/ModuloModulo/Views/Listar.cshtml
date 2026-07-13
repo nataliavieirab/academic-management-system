@@ -1,11 +1,12 @@
 @using EscolaDeCursos.WebApp.Modulos.ModuloCurso.ModuloModulo
 @{
   Layout = "_Layout";
-  ViewBag.Titulo = "🧩 Módulos";
+  ViewBag.Titulo = $"🧩 Módulos do Curso: {ViewBag.CursoTitulo}";
   ViewBag.Info = "Cadastre, visualize e gerencie os módulos do curso.";
   ViewBag.TextoBotao = "Cadastrar Módulo";
   ViewBag.ControllerBotao = "Modulo";
   ViewBag.ActionBotao = "Cadastrar";
+  ViewBag.IdBotao = ViewBag.CursoId;
 }
 
 @model List<ListarModulosViewModel>;
@@ -37,14 +38,14 @@ else
             <hr class="my-1">
 
             <dl class="row g-2 mb-4 mt-2">
-              <dt class="col-4 text-secondary fw-bold">Ordem:</dt>
-              <dd class="col-8 mb-0 text-break">@m.Ordem</dd>
+              <dt class="col-4 text-secondary fw-bold">Descrição:</dt>
+              <dd class="col-8 mb-0 text-break">@m.Descricao</dd>
 
               <dt class="col-4 text-secondary fw-bold">Duração:</dt>
               <dd class="col-8 mb-0 text-break">@m.Duracao h</dd>
-
+              @*
               <dt class="col-4 text-secondary fw-bold">Curso:</dt>
-              <dd class="col-8 mb-0 text-break">@m.CursoTitulo</dd>
+              <dd class="col-8 mb-0 text-break">@m.CursoTitulo</dd> *@
             </dl>
 
             <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">

@@ -1,0 +1,43 @@
+﻿@using EscolaDeCursos.WebApp.Modulos.ModuloCurso.ModuloModulo
+@{
+  Layout = "_Layout";
+  ViewBag.Titulo = "📋 Cadastrar Módulo";
+  ViewBag.Info = "Registre as informações do novo módulo.";
+}
+
+@model CadastrarModuloViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4 bg-transparent" style="max-width: 620px;"
+  asp-action="Cadastrar" method="post">
+  <input asp-for="CursoId" type="hidden">
+
+  <div class="mb-3">
+    <label asp-for="Titulo" class="form-label fw-semibold text-primary text-uppercase small">Título</label>
+    <input asp-for="Titulo" type="text" class="form-control">
+    <span asp-validation-for="Titulo" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Descricao" class="form-label fw-semibold text-primary text-uppercase small">Descrição</label>
+    <input asp-for="Descricao" type="text" class="form-control">
+    <span asp-validation-for="Descricao" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Ordem" class="form-label fw-semibold text-primary text-uppercase small">Numeração (Sequência do
+      Módulo)</label>
+    <input asp-for="Ordem" type="number" class="form-control">
+    <span asp-validation-for="Ordem" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Duracao" class="form-label fw-semibold text-primary text-uppercase small">Duração (horas)</label>
+    <input asp-for="Duracao" type="number" min="1" class="form-control">
+    <span asp-validation-for="Duracao" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <a class="btn btn-outline-secondary rounded-2 px-4" asp-action="Listar" asp-route-cursoId="@Model.CursoId">Voltar</a>
+    <button class="btn btn-primary rounded-2 px-4" type="submit">Confirmar</button>
+  </div>
+</form>
