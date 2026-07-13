@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+     <UserSecretsId>ad4016f9-63ad-4aa4-a292-ed1b5b1ff099</UserSecretsId>
   </PropertyGroup>
 
 
@@ -14,9 +15,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
   </ItemGroup>
 
-
   <ItemGroup>
     <ProjectReference Include="..\EscolaDeCursos.Dominio\EscolaDeCursos.Dominio.csproj" />
+    <ProjectReference Include="..\EscolaDeCursos.Infra\EscolaDeCursos.Infra.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using System.Reflection;
+using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
 using Microsoft.EntityFrameworkCore;
 
 namespace EscolaDeCursos.Infra.Compartilhado.Orm;
@@ -12,7 +13,7 @@ public sealed class EscolaDeCursosDbContext(
     // public DbSet<Categoria> Categorias => Set<Categoria>();
     // public DbSet<Turma> Turmas => Set<Turma>();
     // public DbSet<Matricula> Matriculas => Set<Matricula>();
-    // public DbSet<Aluno> Alunos => Set<Aluno>();
+    public DbSet<Aluno> Alunos => Set<Aluno>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         Assembly assembly = typeof(EscolaDeCursosDbContext).Assembly;

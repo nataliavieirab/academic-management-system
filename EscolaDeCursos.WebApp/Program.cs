@@ -13,6 +13,7 @@ builder.Services.AddPresentationConfig(builder.Configuration);
 var app = builder.Build();
 
 // Middlewares de roteamento
+app.UseStaticFiles();
 app.UseRouting();
 app.MapDefaultControllerRoute();
 

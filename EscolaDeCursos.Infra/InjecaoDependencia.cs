@@ -1,5 +1,7 @@
+using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
 using EscolaDeCursos.Infra.Comartilhado.Logging;
 using EscolaDeCursos.Infra.Compartilhado.Orm;
+using EscolaDeCursos.Infra.Modulos.ModuloAluno;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,9 +13,9 @@ namespace EscolaDeCursos.Infra;
 public static class InjecaoDependencia
 {
     public static void AddInfraRepositories(
-        this IServiceCollection services,
-        IConfiguration configuration,
-        ILoggingBuilder logging
+    this IServiceCollection services,
+    IConfiguration configuration,
+    ILoggingBuilder logging
     )
     {
         // Injeta logs do Serilog
@@ -31,14 +33,17 @@ public static class InjecaoDependencia
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw new InvalidOperationException(
-                    $"A connection string \"SqlServerEF\" não foi encontrada."
-                );
+        $"A connection string \"SqlServerEF\" não foi encontrada."
+        );
             }
 
             options.UseSqlServer(connectionString, opt =>
-            {
-                opt.EnableRetryOnFailure(3);
-            });
+    {
+        opt.EnableRetryOnFailure(3);
+    });
         });
+
+        services.AddScoped<IRepositorioAluno, RepositorioAluno>();
+
     }
 }
