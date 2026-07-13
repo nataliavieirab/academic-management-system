@@ -1,26 +1,24 @@
 @{
-  Layout = "_Layout";
-  ViewData["BodyClass"] = "page-index";
+Layout = "_Layout";
+ViewData["BodyClass"] = "page-index";
 }
 
 <div class="row index-container">
   <div class="col-lg-7">
     <h1 class="display-5 fw-semibold mb-3" style="color: rgb(0, 35, 84)">Escola de Cursos</h1>
     <p class="lead text-secondary mb-4">
-      Facilite o dia a dia registrando compromissos, administrando contatos e acompanhando tarefas.
+      Facilite a gestão da sua escola organizando cursos, turmas e matrículas, acompanhando instrutores e alunos com
+      eficiência e clareza.
     </p>
     <div class="d-flex flex-wrap gap-2 mt-4 d-none d-md-block">
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Curso"
-        asp-action="Listar">Cursos</a>
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Turma"
-        asp-action="Listar">Turmas</a>
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Aluno"
-        asp-action="Listar">Alunos</a>
+      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Curso" asp-action="Listar">Cursos</a>
+      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Turma" asp-action="Listar">Turmas</a>
+      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Aluno" asp-action="Listar">Alunos</a>
       <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Instrutor"
         asp-action="Listar">Instrutores</a>
 
       <div class="index-img-container">
-        <img src="~/img/e-Agenda.png" alt="Agenda" class="index-img" />
+        <img src="~/img/escoladecursos.png" alt="Cursos" class="index-img" />
       </div>
     </div>
 
