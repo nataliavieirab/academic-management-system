@@ -1,0 +1,48 @@
+@using EscolaDeCursos.Dominio.Modulos.ModuloCurso
+@{
+  Layout = "_Layout";
+  ViewBag.Titulo = "📋 Cadastrar Curso";
+  ViewBag.Info = "Registre as informações do novo curso.";
+}
+
+@model CadastrarCursoViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4 bg-transparent" style="max-width: 620px;"
+      asp-action="Cadastrar" method="post">
+  <div class="mb-3">
+    <label asp-for="Titulo" class="form-label fw-semibold text-primary text-uppercase small">Título</label>
+    <input asp-for="Titulo" type="text" class="form-control">
+    <span asp-validation-for="Titulo" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Descricao" class="form-label fw-semibold text-primary text-uppercase small">Descrição</label>
+    <input asp-for="Descricao" type="text" class="form-control">
+    <span asp-validation-for="Descricao" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="CategoriaId" class="form-label fw-semibold text-primary text-uppercase small">Categoria</label>
+    <select asp-for="CategoriaId" asp-items="Model.CategoriasDisponiveis" class="form-select">
+      <option value="">Selecione uma categoria</option>
+    </select>
+    <span asp-validation-for="CategoriaId" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Nivel" class="form-label fw-semibold text-primary text-uppercase small">Nível</label>
+    <select asp-for="Nivel" asp-items="Html.GetEnumSelectList<Nivel>()" class="form-select"></select>
+    <span asp-validation-for="Nivel" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="CargaHoraria" class="form-label fw-semibold text-primary text-uppercase small">Carga Horária</label>
+    <input asp-for="CargaHoraria" type="number" min="1" class="form-control">
+    <span asp-validation-for="CargaHoraria" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <a class="btn btn-outline-secondary rounded-2 px-4" asp-action="Listar">Voltar</a>
+    <button class="btn btn-primary rounded-2 px-4" type="submit">Confirmar</button>
+  </div>
+</form>
