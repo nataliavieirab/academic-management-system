@@ -1,0 +1,63 @@
+@using EscolaDeCursos.WebApp.Modulos.ModuloCurso.ModuloModulo
+@{
+  Layout = "_Layout";
+  ViewBag.Titulo = "🧩 Módulos";
+  ViewBag.Info = "Cadastre, visualize e gerencie os módulos do curso.";
+  ViewBag.TextoBotao = "Cadastrar Módulo";
+  ViewBag.ControllerBotao = "Modulo";
+  ViewBag.ActionBotao = "Cadastrar";
+}
+
+@model List<ListarModulosViewModel>;
+
+@if (TempData["MensagemErro"] is string mensagemErro)
+{
+  <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
+    @mensagemErro
+  </div>
+}
+
+@if (Model.Count == 0)
+{
+  <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
+    Nenhum módulo cadastrado.
+  </div>
+}
+else
+{
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+    @foreach (ListarModulosViewModel m in Model)
+    {
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start gap-3">
+              <h5 class="card-title fw-semibold text-dark medium">@m.Titulo</h5>
+            </div>
+            <hr class="my-1">
+
+            <dl class="row g-2 mb-4 mt-2">
+              <dt class="col-4 text-secondary fw-bold">Ordem:</dt>
+              <dd class="col-8 mb-0 text-break">@m.Ordem</dd>
+
+              <dt class="col-4 text-secondary fw-bold">Duração:</dt>
+              <dd class="col-8 mb-0 text-break">@m.Duracao h</dd>
+
+              <dt class="col-4 text-secondary fw-bold">Curso:</dt>
+              <dd class="col-8 mb-0 text-break">@m.CursoTitulo</dd>
+            </dl>
+
+            <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
+              <a asp-action="editar" asp-route-id="@m.Id" class="btn btn-primary" title="Editar">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <a asp-action="excluir" asp-route-id="@m.Id" class="btn btn-danger" title="Excluir">
+                <i class="bi bi-trash"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}

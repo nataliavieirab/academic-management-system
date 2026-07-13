@@ -59,6 +59,50 @@ public class CursoController(
         return RedirectToAction(nameof(Listar));
     }
 
+    [HttpGet]
+    public ActionResult Editar(Guid id)
+    {
+        Result<DetalhesCursoDto> resultado = servicoCurso.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarCursoViewModel editarVm = mapeador.Map<EditarCursoViewModel>(resultado.Value);
+
+        editarVm.CategoriasDisponiveis = ObterCategoriasDisponiveis();
+
+        return View(editarVm);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(EditarCursoViewModel editarVm)
+    {
+        if (!ModelState.IsValid)
+        {
+            editarVm.CategoriasDisponiveis = ObterCategoriasDisponiveis();
+
+            return View(editarVm);
+        }
+
+        EditarCursoDto dto = mapeador.Map<EditarCursoDto>(editarVm);
+        Result resultado = servicoCurso.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            editarVm.CategoriasDisponiveis = ObterCategoriasDisponiveis();
+
+            return View(editarVm);
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
+
     private List<SelectListItem> ObterCategoriasDisponiveis()
     {
         return servicoCategoria

@@ -56,7 +56,10 @@ public record EditarCursoViewModel(
 
     [Range(1, int.MaxValue, ErrorMessage = "A carga horária deve ser maior que zero.")]
     int CargaHoraria
-);
+)
+{
+    public List<SelectListItem> CategoriasDisponiveis { get; set; } = [];
+}
 
 public record ExcluirCursoViewModel(
     Guid Id,

@@ -12,4 +12,11 @@ public sealed class RepositorioCurso(EscolaDeCursosDbContext dbContext) :
             .Include(c => c.Categoria)
             .ToList();
     }
+
+    public override Curso? SelecionarPorId(Guid idSelecionado)
+    {
+        return registros
+            .Include(c => c.Categoria)
+            .SingleOrDefault(c => c.Id == idSelecionado);
+    }
 }
