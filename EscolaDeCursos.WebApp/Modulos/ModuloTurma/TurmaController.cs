@@ -119,4 +119,37 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
         return RedirectToAction(nameof(Listar));
     }
 
+    [HttpGet]
+    public ActionResult Excluir(Guid id)
+    {
+        Result<DetalhesTurmaDto> resultado = servicoTurma.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData["MensagemErro"] = "Turma não encontrada.";
+            return RedirectToAction(nameof(Listar));
+        }
+
+        DetalhesTurmaDto dto = resultado.Value;
+        ExcluirTurmaViewModel excluirVm = mapeador.Map<ExcluirTurmaViewModel>(dto);
+
+        return View(excluirVm);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirTurmaViewModel excluirVm)
+    {
+        ExcluirTurmaDto dto = mapeador.Map<ExcluirTurmaDto>(excluirVm);
+        Result resultado = servicoTurma.Excluir(dto.Id);
+
+        if (resultado.IsFailed)
+        {
+            TempData["MensagemErro"] = resultado.Errors.First().Message;
+            return RedirectToAction(nameof(Listar));
+        }
+
+        TempData["MensagemSucesso"] = "Turma excluída com sucesso.";
+        return RedirectToAction(nameof(Listar));
+    }
+
 }

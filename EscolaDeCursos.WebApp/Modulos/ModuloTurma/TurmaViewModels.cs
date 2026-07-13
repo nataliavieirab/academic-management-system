@@ -77,3 +77,13 @@ public record EditarTurmaViewModel(
     List<OpcaoInstrutorViewModel> Instrutores
 );
 
+public record ExcluirTurmaViewModel(
+    Guid Id,
+    string Nome,
+    Guid? InstrutorId,
+    string? InstrutorNome,
+    int CapacidadeMaxima,
+    DateOnly DataInicio,
+    DateOnly DataTermino
+);
+

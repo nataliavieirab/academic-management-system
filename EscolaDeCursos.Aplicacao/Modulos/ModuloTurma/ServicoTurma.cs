@@ -97,6 +97,21 @@ public class ServicoTurma : ServicoBase<Turma>
         return Result.Ok();
     }
 
+    public Result Excluir(Guid id)
+    {
+        Turma? turma = _repositorioTurma.SelecionarPorId(id);
+
+        if (turma is null)
+            return Falha(nameof(id), "Turma não encontrada.");
+
+        if (turma.Alunos.Any())
+            return Falha(nameof(id), "Não é permitido excluir turmas com alunos matriculados.");
+
+        _repositorioTurma.Excluir(id);
+
+        return Result.Ok();
+    }
+
     public List<ListarTurmasDto> SelecionarTodos()
     {
         return _repositorioTurma
