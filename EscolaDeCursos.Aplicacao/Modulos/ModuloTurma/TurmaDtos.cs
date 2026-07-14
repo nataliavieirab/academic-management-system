@@ -1,9 +1,9 @@
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
 
-// public record OpcaoCursoDto(
-//     Guid Id,
-//     string Nome
-// );
+public record OpcaoCursoDto(
+    Guid Id,
+    string Titulo
+);
 
 public record OpcaoInstrutorDto(
     Guid Id,
@@ -13,8 +13,8 @@ public record OpcaoInstrutorDto(
 public record ListarTurmasDto(
     Guid Id,
     string Nome,
-    // Guid? CursoId,
-    string? InstrutorNome,
+    string CursoTitulo,
+    string InstrutorNome,
     int CapacidadeMaxima,
     DateOnly DataInicio,
     DateOnly DataTermino
@@ -22,8 +22,8 @@ public record ListarTurmasDto(
 
 public record CadastrarTurmaDto(
     string Nome,
-    // Guid? CursoId,
-    Guid? InstrutorId,
+    Guid CursoId,
+    Guid InstrutorId,
     int CapacidadeMaxima,
     DateOnly DataInicio,
     DateOnly DataTermino
@@ -32,8 +32,8 @@ public record CadastrarTurmaDto(
 public record EditarTurmaDto(
     Guid Id,
     string Nome,
-    // Guid? CursoId,
-    Guid? InstrutorId,
+    Guid CursoId,
+    Guid InstrutorId,
     int CapacidadeMaxima,
     DateOnly DataInicio,
     DateOnly DataTermino
@@ -42,8 +42,8 @@ public record EditarTurmaDto(
 public record ExcluirTurmaDto(
     Guid Id,
     string Nome,
-    // Guid? CursoId,
-    Guid? InstrutorId,
+    Guid CursoId,
+    Guid InstrutorId,
     int CapacidadeMaxima,
     DateOnly DataInicio,
     DateOnly DataTermino
@@ -52,10 +52,10 @@ public record ExcluirTurmaDto(
 public record DetalhesTurmaDto(
     Guid Id,
     string Nome,
-    // Guid? CursoId,
-    // string? CursoNome,
-    Guid? InstrutorId,
-    string? InstrutorNome,
+    Guid CursoId,
+    string CursoTitulo,
+    Guid InstrutorId,
+    string InstrutorNome,
     int CapacidadeMaxima,
     DateOnly DataInicio,
     DateOnly DataTermino

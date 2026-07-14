@@ -4,6 +4,7 @@ using EscolaDeCursos.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(EscolaDeCursosDbContext))]
-    partial class EscolaDeCursosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714213242_Add CursoId column to TBTurma")]
+    partial class AddCursoIdcolumntoTBTurma
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,7 +235,7 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.Property<int>("CapacidadeMaxima")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CursoId")
+                    b.Property<Guid?>("CursoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateOnly>("DataInicio")
@@ -241,7 +244,7 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.Property<DateOnly>("DataTermino")
                         .HasColumnType("date");
 
-                    b.Property<Guid>("InstrutorId")
+                    b.Property<Guid?>("InstrutorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
@@ -305,14 +308,12 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasOne("EscolaDeCursos.Dominio.Modulos.ModuloCurso.Curso", "Curso")
                         .WithMany()
                         .HasForeignKey("CursoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("EscolaDeCursos.Dominio.Modulos.ModuloInstrutor.Instrutor", "Instrutor")
                         .WithMany()
                         .HasForeignKey("InstrutorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Curso");
 

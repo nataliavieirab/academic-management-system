@@ -29,16 +29,16 @@ public sealed class TurmaConfiguration : IEntityTypeConfiguration<Turma>
         builder.Property(t => t.DataTermino)
             .IsRequired();
 
-
-        // builder.HasOne(t => t.Curso)
-        //     .WithMany()
-        //     .HasForeignKey("CursoId")
-        //     .OnDelete(DeleteBehavior.Restrict);
-
+        builder.HasOne(t => t.Curso)
+            .WithMany()
+            .HasForeignKey("CursoId")
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
 
         builder.HasOne(t => t.Instrutor)
             .WithMany()
             .HasForeignKey("InstrutorId")
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
     }
 }

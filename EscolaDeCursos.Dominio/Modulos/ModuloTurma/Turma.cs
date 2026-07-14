@@ -1,5 +1,5 @@
 using EscolaDeCursos.Dominio.Compartilhado;
-// using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 
 namespace EscolaDeCursos.Dominio.Modulos.ModuloTurma;
@@ -8,8 +8,8 @@ namespace EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 public class Turma : EntidadeBase<Turma>
 {
     public string Nome { get; set; } = string.Empty;
-    // public Curso? Curso { get; set; } = null;
-    public Instrutor? Instrutor { get; set; } = null;
+    public Curso Curso { get; set; }
+    public Instrutor Instrutor { get; set; }
     public int CapacidadeMaxima { get; set; }
     public DateOnly DataInicio { get; set; }
     public DateOnly DataTermino { get; set; }
@@ -18,10 +18,10 @@ public class Turma : EntidadeBase<Turma>
     {
     }
 
-    public Turma(string nome, Instrutor? instrutor, int capacidadeMaxima, DateOnly dataInicio, DateOnly dataTermino)
+    public Turma(string nome, Curso curso, Instrutor instrutor, int capacidadeMaxima, DateOnly dataInicio, DateOnly dataTermino)
     {
         Nome = nome;
-        // Curso = curso;
+        Curso = curso;
         Instrutor = instrutor;
         CapacidadeMaxima = capacidadeMaxima;
         DataInicio = dataInicio;
@@ -33,8 +33,6 @@ public class Turma : EntidadeBase<Turma>
         List<string> erros = [];
 
         ValidarNome(erros);
-        // ValidarCurso(erros);
-        ValidarInstrutor(erros);
         ValidarCapacidadeMaxima(erros);
         ValidarDataInicio(erros);
         ValidarDataTermino(erros);
@@ -46,18 +44,6 @@ public class Turma : EntidadeBase<Turma>
     {
         if (Nome.Length < 2 || Nome.Length > 100)
             erros.Add("O campo \"Nome\" deve conter entre 2 e 100 caracteres.");
-    }
-
-    // private void ValidarCurso(List<string> erros)
-    // {
-    //     if (Curso == null)
-    //         erros.Add("Toda turma deve possuir um curso.");
-    // }
-
-    private void ValidarInstrutor(List<string> erros)
-    {
-        if (Instrutor == null)
-            erros.Add("Toda turma deve possuir um instrutor.");
     }
 
     private void ValidarCapacidadeMaxima(List<string> erros)
@@ -83,7 +69,7 @@ public class Turma : EntidadeBase<Turma>
         Turma turmaAtualizada = entidadeAtualizada;
 
         Nome = turmaAtualizada.Nome;
-        // Curso = turmaAtualizada.Curso;
+        Curso = turmaAtualizada.Curso;
         Instrutor = turmaAtualizada.Instrutor;
         CapacidadeMaxima = turmaAtualizada.CapacidadeMaxima;
         DataInicio = turmaAtualizada.DataInicio;

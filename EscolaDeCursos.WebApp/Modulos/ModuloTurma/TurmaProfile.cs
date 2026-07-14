@@ -14,6 +14,6 @@ public class TurmaProfile : Profile
         CreateMap<ExcluirTurmaViewModel, ExcluirTurmaDto>();
 
         CreateMap<OpcaoInstrutorDto, OpcaoInstrutorViewModel>();
-        // CreateMap<OpcaoCursoDto, OpcaoCursoViewModel>();
+        CreateMap<OpcaoCursoDto, OpcaoCursoViewModel>();
     }
 }

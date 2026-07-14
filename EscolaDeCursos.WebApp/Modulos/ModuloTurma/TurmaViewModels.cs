@@ -10,12 +10,12 @@ public record OpcaoInstrutorViewModel(
 
 public record OpcaoCursoViewModel(
     Guid Id,
-    string Nome
+    string Titulo
 );
 public record ListarTurmasViewModel(
     Guid Id,
     string Nome,
-    // string CursoNome,
+    string CursoTitulo,
     string InstrutorNome,
     int CapacidadeMaxima,
     DateOnly DataInicio,
@@ -28,11 +28,11 @@ public record CadastrarTurmaViewModel(
         ErrorMessage = "O campo \"Nome da Turma\" deve conter entre 2 e 100 caracteres.")]
     string Nome,
 
-    // [Required(ErrorMessage = "O campo \"Curso\" deve ser selecionado.")]
-    // Guid CursoId,
+    [Required(ErrorMessage = "O campo \"Curso\" deve ser selecionado.")]
+    Guid CursoId,
 
     [Required(ErrorMessage = "O campo \"Instrutor\" deve ser selecionado.")]
-    Guid? InstrutorId,
+    Guid InstrutorId,
 
     [Required(ErrorMessage = "O campo \"Capacidade Máxima\" deve ser preenchido.")]
     [Range(1, 100, ErrorMessage = "A capacidade deve ser entre 1 e 100 alunos.")]
@@ -44,8 +44,8 @@ public record CadastrarTurmaViewModel(
     [Required(ErrorMessage = "O campo \"Data de Término\" deve ser preenchido.")]
     DateOnly DataTermino,
 
-    // [ValidateNever]
-    // List<OpcaoCursoViewModel> Cursos,
+    [ValidateNever]
+    List<OpcaoCursoViewModel> Cursos,
 
     [ValidateNever]
     List<OpcaoInstrutorViewModel> Instrutores
@@ -61,7 +61,10 @@ public record EditarTurmaViewModel(
     string Nome,
 
     [Required(ErrorMessage = "O campo \"Instrutor\" deve ser selecionado.")]
-    Guid? InstrutorId,
+    Guid InstrutorId,
+
+    [Required(ErrorMessage = "O campo \"Curso\" deve ser selecionado.")]
+    Guid CursoId,
 
     [Required(ErrorMessage = "O campo \"Capacidade Máxima\" deve ser preenchido.")]
     [Range(1, 100, ErrorMessage = "A capacidade deve ser entre 1 e 100 alunos.")]
@@ -74,14 +77,19 @@ public record EditarTurmaViewModel(
     DateOnly DataTermino,
 
     [ValidateNever]
-    List<OpcaoInstrutorViewModel> Instrutores
+    List<OpcaoInstrutorViewModel> Instrutores,
+
+    [ValidateNever]
+    List<OpcaoCursoViewModel> Cursos
 );
 
 public record ExcluirTurmaViewModel(
     Guid Id,
     string Nome,
-    Guid? InstrutorId,
-    string? InstrutorNome,
+    Guid InstrutorId,
+    string InstrutorNome,
+    Guid CursoId,
+    string CursoTitulo,
     int CapacidadeMaxima,
     DateOnly DataInicio,
     DateOnly DataTermino

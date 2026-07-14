@@ -19,6 +19,15 @@ ViewBag.Info = "Atualize as informações da turma.";
     </div>
 
     <div class="mb-3">
+        <label asp-for="CursoId" class="form-label fw-semibold text-primary text-uppercase small">Curso</label>
+        <select asp-for="CursoId" class="form-select"
+            asp-items='@(new SelectList(Model.Cursos ?? new List<OpcaoCursoViewModel>(), "Id", "Titulo"))'>
+            <option value="">Selecione um curso</option>
+        </select>
+        <span asp-validation-for="CursoId" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
         <label asp-for="InstrutorId" class="form-label fw-semibold text-primary text-uppercase small">Instrutor</label>
         <select asp-for="InstrutorId" class="form-select"
             asp-items='@(new SelectList(Model.Instrutores ?? new List<OpcaoInstrutorViewModel>(), "Id", "Nome"))'>
