@@ -1,7 +1,7 @@
 @using EscolaDeCursos.WebApp.Modulos.ModuloCurso
 @{
   Layout = "_Layout";
-  ViewBag.Titulo = $"📚 Categoria — {ViewBag.CategoriaTitulo}";
+  ViewBag.Titulo = $"📚 Cursos de '{ViewBag.CategoriaTitulo}'";
   ViewBag.Info = $"Visualize os cursos desta categoria.";
 }
 
@@ -22,9 +22,9 @@
 }
 else
 {
-  <h3 class="fw-semibold text-dark medium mb-3 mt-2">Cursos</h3>
-  <hr class="my-1">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2 mt-3">
+  @* <h3 class="fw-semibold text-dark medium mb-3 mt-2">Cursos</h3>
+  <hr class="my-1"> *@
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
     @foreach (ListarCursosViewModel c in Model)
     {
       <div class="col">
@@ -36,6 +36,12 @@ else
             <hr class="my-1">
 
             <dl class="row g-2 mt-2">
+              <dt class="col-4 text-secondary fw-bold">Categoria:</dt>
+              <dd class="col-8 mb-0 text-break">@c.CategoriaTitulo</dd>
+
+              <dt class="col-4 text-secondary fw-bold">Descrição:</dt>
+              <dd class="col-8 mb-0 text-break">@c.Descricao</dd>
+
               <dt class="col-4 text-secondary fw-bold">Nível:</dt>
               <dd class="col-8 mb-0 text-break">@c.Nivel</dd>
 
