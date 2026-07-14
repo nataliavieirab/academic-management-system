@@ -1,6 +1,7 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
 using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
+using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using FluentResults;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
 
@@ -8,14 +9,17 @@ public class ServicoCurso : ServicoBase<Curso>
 {
     private readonly IRepositorioCurso repositorioCurso;
     private readonly IRepositorioCategoria repositorioCategoria;
+    private readonly IRepositorioTurma repositorioTurma;
 
     public ServicoCurso(
         IRepositorioCurso repositorioCurso,
-        IRepositorioCategoria repositorioCategoria
+        IRepositorioCategoria repositorioCategoria,
+        IRepositorioTurma repositorioTurma
     )
     {
         this.repositorioCurso = repositorioCurso;
         this.repositorioCategoria = repositorioCategoria;
+        this.repositorioTurma = repositorioTurma;
     }
 
     public Result Cadastrar(CadastrarCursoDto dto)
@@ -79,10 +83,13 @@ public class ServicoCurso : ServicoBase<Curso>
 
     public Result Excluir(Guid id)
     {
-        Curso? Curso = repositorioCurso.SelecionarPorId(id);
+        Curso? curso = repositorioCurso.SelecionarPorId(id);
 
-        if (Curso == null)
+        if (curso == null)
             return Falha(string.Empty, "Curso não encontrado.");
+
+        if (PossuiTurmasVinculadas(id))
+            return Falha(string.Empty, "Não é permitido excluir um curso com turmas vinculadas.");
 
         repositorioCurso.Excluir(id);
 
@@ -150,6 +157,13 @@ public class ServicoCurso : ServicoBase<Curso>
                 c.Id != idIgnorado &&
                 NormalizarTitulo(c.Titulo) == tituloNormalizado
             );
+    }
+
+    private bool PossuiTurmasVinculadas(Guid cursoId)
+    {
+        return repositorioTurma
+            .SelecionarTodos()
+            .Any(t => t.Curso.Id == cursoId);
     }
 
     private static string NormalizarTitulo(string titulo)
