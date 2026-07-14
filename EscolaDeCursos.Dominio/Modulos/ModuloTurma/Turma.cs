@@ -1,5 +1,4 @@
 using EscolaDeCursos.Dominio.Compartilhado;
-using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
 // using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 
@@ -11,7 +10,6 @@ public class Turma : EntidadeBase<Turma>
     public string Nome { get; set; } = string.Empty;
     // public Curso? Curso { get; set; } = null;
     public Instrutor? Instrutor { get; set; } = null;
-    public List<Aluno> Alunos { get; set; } = new List<Aluno>();
     public int CapacidadeMaxima { get; set; }
     public DateOnly DataInicio { get; set; }
     public DateOnly DataTermino { get; set; }
@@ -28,7 +26,6 @@ public class Turma : EntidadeBase<Turma>
         CapacidadeMaxima = capacidadeMaxima;
         DataInicio = dataInicio;
         DataTermino = dataTermino;
-        Alunos = new List<Aluno>();
     }
 
     public override List<string> Validar()
