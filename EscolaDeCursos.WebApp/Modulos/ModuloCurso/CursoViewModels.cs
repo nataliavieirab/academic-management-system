@@ -7,6 +7,7 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloCurso;
 public record ListarCursosViewModel(
     Guid Id,
     string Titulo,
+    string Descricao,
     Guid CategoriaId,
     string CategoriaTitulo,
     Nivel Nivel,

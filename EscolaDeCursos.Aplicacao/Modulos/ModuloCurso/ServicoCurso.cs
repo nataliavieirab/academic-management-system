@@ -96,6 +96,7 @@ public class ServicoCurso : ServicoBase<Curso>
             .Select(c => new ListarCursosDto(
                 c.Id,
                 c.Titulo,
+                c.Descricao,
                 c.CategoriaId,
                 c.Categoria.Titulo,
                 c.Nivel,
@@ -112,6 +113,7 @@ public class ServicoCurso : ServicoBase<Curso>
             .Select(c => new ListarCursosDto(
                 c.Id,
                 c.Titulo,
+                c.Descricao,
                 c.CategoriaId,
                 c.Categoria.Titulo,
                 c.Nivel,
