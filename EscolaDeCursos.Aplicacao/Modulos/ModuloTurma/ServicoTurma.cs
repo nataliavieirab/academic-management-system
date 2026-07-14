@@ -1,5 +1,6 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
+using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using FluentResults;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
@@ -8,14 +9,17 @@ public class ServicoTurma : ServicoBase<Turma>
 {
     private readonly IRepositorioTurma _repositorioTurma;
     private readonly IRepositorioInstrutor _repositorioInstrutor;
+    private readonly IRepositorioMatricula _repositorioMatricula;
 
     public ServicoTurma(
         IRepositorioTurma repositorioTurma,
-        IRepositorioInstrutor repositorioInstrutor
+        IRepositorioInstrutor repositorioInstrutor,
+        IRepositorioMatricula repositorioMatricula
     )
     {
         _repositorioTurma = repositorioTurma;
         _repositorioInstrutor = repositorioInstrutor;
+        _repositorioMatricula = repositorioMatricula;
     }
 
     public Result Cadastrar(CadastrarTurmaDto dto)
@@ -104,7 +108,11 @@ public class ServicoTurma : ServicoBase<Turma>
         if (turma is null)
             return Falha(nameof(id), "Turma não encontrada.");
 
-        if (turma.Alunos.Any())
+        bool possuiMatriculasAtivas = _repositorioMatricula
+            .SelecionarTodos()
+            .Any(m => m.TurmaId == id && m.Situacao == SituacaoAluno.Ativa);
+
+        if (possuiMatriculasAtivas)
             return Falha(nameof(id), "Não é permitido excluir turmas com alunos matriculados.");
 
         _repositorioTurma.Excluir(id);
