@@ -1,7 +1,7 @@
 using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
-using EscolaDeCursos.Infra.Comartilhado.Logging;
+using EscolaDeCursos.Infra.Compartilhado.Logging;
 using EscolaDeCursos.Infra.Compartilhado.Orm;
 using EscolaDeCursos.Infra.Modulos.ModuloAluno;
 using EscolaDeCursos.Infra.Modulos.ModuloInstrutor;
