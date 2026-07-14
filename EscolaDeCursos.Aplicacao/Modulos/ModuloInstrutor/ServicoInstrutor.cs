@@ -1,17 +1,21 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
+using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using FluentResults;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloInstrutor;
 
 public class ServicoInstrutor : ServicoBase<Instrutor>
 {
     private readonly IRepositorioInstrutor repositorioInstrutor;
+    private readonly IRepositorioTurma repositorioTurma;
 
     public ServicoInstrutor(
-        IRepositorioInstrutor repositorioInstrutor
+        IRepositorioInstrutor repositorioInstrutor,
+        IRepositorioTurma repositorioTurma
     )
     {
         this.repositorioInstrutor = repositorioInstrutor;
+        this.repositorioTurma = repositorioTurma;
     }
 
     public Result Cadastrar(CadastrarInstrutorDto dto)
@@ -79,9 +83,19 @@ public class ServicoInstrutor : ServicoBase<Instrutor>
         if (instrutor == null)
             return Result.Fail("Instrutor não encontrado.");
 
+        if (PossuiTurmasVinculadas(id))
+            return Falha(string.Empty, "Não é permitido excluir um instrutor vinculado a alguma turma.");
+
         repositorioInstrutor.Excluir(id);
 
         return Result.Ok();
+    }
+
+    private bool PossuiTurmasVinculadas(Guid instrutorId)
+    {
+        return repositorioTurma
+            .SelecionarTodos()
+            .Any(t => t.Instrutor.Id == instrutorId);
     }
 
     private string NormalizarCpf(string cpf)
