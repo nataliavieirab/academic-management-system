@@ -1,11 +1,16 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
 using EscolaDeCursos.WebApp.Compartilhado.Extensions;
+using EscolaDeCursos.WebApp.Modulos.ModuloCurso;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 namespace EscolaDeCursos.WebApp.Modulos.ModuloCategoria;
 
-public class CategoriaController(ServicoCategoria servicoCategoria, IMapper mapeador) : Controller
+public class CategoriaController(
+    ServicoCategoria servicoCategoria,
+    ServicoCurso servicoCurso,
+    IMapper mapeador) : Controller
 {
     [HttpGet]
     public ActionResult Listar()
@@ -14,6 +19,27 @@ public class CategoriaController(ServicoCategoria servicoCategoria, IMapper mape
         List<ListarCategoriasViewModel> listarVms = mapeador.Map<List<ListarCategoriasViewModel>>(dtos);
 
         return View(listarVms);
+    }
+
+    [HttpGet]
+    public ActionResult Cursos(Guid id)
+    {
+        Result<DetalhesCategoriaDto> resultado = servicoCategoria.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        List<ListarCursosDto> dtos = servicoCurso.SelecionarPorCategoria(id);
+        List<ListarCursosViewModel> vms = mapeador.Map<List<ListarCursosViewModel>>(dtos);
+
+        ViewBag.CategoriaId = id;
+        ViewBag.CategoriaTitulo = resultado.Value.Titulo;
+
+        return View(vms);
     }
 
     [HttpGet]

@@ -96,6 +96,24 @@ public class ServicoCurso : ServicoBase<Curso>
             .Select(c => new ListarCursosDto(
                 c.Id,
                 c.Titulo,
+                c.Descricao,
+                c.CategoriaId,
+                c.Categoria.Titulo,
+                c.Nivel,
+                c.CargaHoraria
+            ))
+            .ToList();
+    }
+
+    public List<ListarCursosDto> SelecionarPorCategoria(Guid categoriaId)
+    {
+        return repositorioCurso
+            .SelecionarTodos()
+            .Where(c => c.CategoriaId == categoriaId)
+            .Select(c => new ListarCursosDto(
+                c.Id,
+                c.Titulo,
+                c.Descricao,
                 c.CategoriaId,
                 c.Categoria.Titulo,
                 c.Nivel,

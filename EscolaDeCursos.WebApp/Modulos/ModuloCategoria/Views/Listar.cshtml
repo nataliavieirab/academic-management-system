@@ -1,7 +1,7 @@
 @{
   Layout = "_Layout";
   ViewBag.Titulo = "🏷️ Categorias";
-  ViewBag.Info = "Cadastre, visualize e gerencie categorias do.";
+  ViewBag.Info = "Cadastre, visualize e gerencie categorias de cursos.";
   ViewBag.TextoBotao = "Cadastrar Categoria";
   ViewBag.ControllerBotao = "Categoria";
   ViewBag.ActionBotao = "Cadastrar";
@@ -36,15 +36,15 @@ else
           </h5>
 
           <div class="d-flex gap-2">
+            <a asp-action="Cursos" asp-route-id="@c.Id" class="btn btn-warning" title="Cursos">
+              <i class="bi bi-card-list px-1"></i> Cursos
+            </a>
             <a asp-action="editar" asp-route-id="@c.Id" class="btn btn-primary">
               <i class="bi bi-pencil-square"></i>
             </a>
 
             <a asp-action="excluir" asp-route-id="@c.Id" class="btn btn-danger">
               <i class="bi bi-trash"></i>
-            </a>
-            <a asp-action="Itens" asp-route-id="@c.Id" class="btn btn-outline-dark" title="Cursos">
-              <i class="bi bi-card-list"></i> Cursos
             </a>
           </div>
 

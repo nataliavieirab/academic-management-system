@@ -4,6 +4,7 @@ namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
 public record ListarCursosDto(
     Guid Id,
     string Titulo,
+    string descricao,
     Guid CategoriaId,
     string CategoriaTitulo,
     Nivel Nivel,
