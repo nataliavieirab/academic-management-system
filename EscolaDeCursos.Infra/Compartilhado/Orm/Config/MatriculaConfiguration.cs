@@ -31,7 +31,7 @@ public sealed class MatriculaConfiguration : IEntityTypeConfiguration<Matricula>
         builder.HasOne(m => m.Turma)
             .WithMany()
             .HasForeignKey(m => m.TurmaId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasIndex(m => new { m.AlunoId, m.TurmaId })
