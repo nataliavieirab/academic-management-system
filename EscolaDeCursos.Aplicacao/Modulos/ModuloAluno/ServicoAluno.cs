@@ -1,5 +1,7 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
 using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using FluentResults;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloAluno;
@@ -8,14 +10,17 @@ public class ServicoAluno : ServicoBase<Aluno>
 {
     private readonly IRepositorioAluno repositorioAluno;
     private readonly IRepositorioMatricula repositorioMatricula;
+    private readonly IRepositorioCurso repositorioCurso;
 
     public ServicoAluno(
         IRepositorioAluno repositorioAluno,
-        IRepositorioMatricula repositorioMatricula
+        IRepositorioMatricula repositorioMatricula,
+        IRepositorioCurso repositorioCurso
     )
     {
         this.repositorioAluno = repositorioAluno;
         this.repositorioMatricula = repositorioMatricula;
+        this.repositorioCurso = repositorioCurso;
     }
 
     public Result Cadastrar(CadastrarAlunoDto dto)
@@ -136,10 +141,10 @@ public class ServicoAluno : ServicoBase<Aluno>
             );
     }
 
-    public List<ListarAlunosDto> SelecionarTodos()
+    public List<ListarAlunosDto> Selecionar(SituacaoAluno? situacao = null, Guid? cursoId = null)
     {
         return repositorioAluno
-            .SelecionarTodos()
+            .Selecionar(situacao, cursoId)
             .Select(a => new ListarAlunosDto(
                 a.Id,
                 a.Nome,
@@ -148,6 +153,19 @@ public class ServicoAluno : ServicoBase<Aluno>
                 a.Email,
                 a.Endereco
             ))
+            .ToList();
+    }
+
+    public List<ListarAlunosDto> SelecionarTodos()
+    {
+        return Selecionar();
+    }
+
+    public List<OpcaoCursoDto> SelecionarCursos()
+    {
+        return repositorioCurso
+            .SelecionarTodos()
+            .Select(c => new OpcaoCursoDto(c.Id, c.Titulo))
             .ToList();
     }
 

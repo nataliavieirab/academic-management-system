@@ -1,6 +1,16 @@
 using System.ComponentModel.DataAnnotations;
+using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
+using EscolaDeCursos.WebApp.Modulos.ModuloTurma;
 
 namespace EscolaDeCursos.WebApp.Modulos.ModuloAluno;
+
+public class ListarAlunosPaginaViewModel
+{
+    public SituacaoAluno? Situacao { get; set; }
+    public Guid? CursoId { get; set; }
+    public List<OpcaoCursoViewModel> Cursos { get; set; } = [];
+    public List<ListarAlunosViewModel> Alunos { get; set; } = [];
+}
 
 public record ListarAlunosViewModel(
     Guid Id,

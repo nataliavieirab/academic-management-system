@@ -1,67 +1,94 @@
+@using EscolaDeCursos.Dominio.Modulos.ModuloMatricula
+@using EscolaDeCursos.WebApp.Modulos.ModuloTurma
+@model ListarAlunosPaginaViewModel
 @{
-Layout = "_Layout";
-ViewBag.Titulo = "🎓 Alunos";
-ViewBag.Info = "Cadastre, visualize e gerencie alunos.";
-ViewBag.TextoBotao = "Cadastrar Aluno";
-ViewBag.ControllerBotao = "Aluno";
-ViewBag.ActionBotao = "Cadastrar";
+  Layout = "_Layout";
+  ViewBag.Titulo = "🎓 Alunos";
+  ViewBag.Info = "Cadastre, visualize e gerencie alunos.";
+  ViewBag.TextoBotao = "Cadastrar Aluno";
+  ViewBag.ControllerBotao = "Aluno";
+  ViewBag.ActionBotao = "Cadastrar";
 }
 
-@model List<ListarAlunosViewModel>;
+@* <div class="card border-primary-subtle rounded-2 shadow-sm mx-auto p-4 bg-transparent"> *@
+<form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4">
 
-    @if (TempData["MensagemErro"] is string mensagemErro)
+  <div class="col-md-4">
+    <label asp-for="CursoId" class="form-label fw-semibold text-secondary small">Curso</label>
+    <select asp-for="CursoId" class="form-select"
+      asp-items='@(new SelectList(Model.Cursos ?? new List<OpcaoCursoViewModel>(), "Id", "Titulo"))'>
+      <option value="">Todos</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label asp-for="Situacao" class="form-label fw-semibold text-secondary small">Matrícula</label>
+    <select asp-for="Situacao" class="form-select" asp-items="Html.GetEnumSelectList<SituacaoAluno>()">
+      <option value="">Todas</option>
+    </select>
+  </div>
+  <div class="col-md-auto">
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+  </div>
+</form>
+
+@* <hr> *@
+
+@if (TempData["MensagemErro"] is string mensagemErro)
+{
+  <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
+    @mensagemErro
+  </div>
+}
+
+@if (Model.Alunos.Count == 0)
+{
+  <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
+    @(Model.Situacao is null && (Model.CursoId is null || Model.CursoId == Guid.Empty)
+      ? "Nenhum aluno cadastrado."
+      : "Nenhum aluno encontrado para este filtro.")
+</div>
+}
+else
+{
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+    @foreach (ListarAlunosViewModel a in Model.Alunos)
     {
-    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
-        @mensagemErro
-    </div>
-    }
-
-    @if (Model.Count == 0)
-    {
-    <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
-        Nenhum aluno cadastrado.
-    </div>
-    }
-    else
-    {
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
-        @foreach (ListarAlunosViewModel a in Model)
-        {
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start gap-3">
-                        <h5 class="card-title fw-semibold text-dark medium">@a.Nome</h5>
-                    </div>
-                    <hr class="my-1">
-
-                    <dl class="row g-2 mb-4 mt-2">
-                        <dt class="col-4 text-secondary fw-bold">CPF:</dt>
-                        <dd class="col-8 mb-0 text-break">@a.Cpf</dd>
-
-                        <dt class="col-4 text-secondary fw-bold">Telefone</dt>
-                        <dd class="col-8 mb-0 text-break">
-                            @a.Telefone
-                        </dd>
-
-                        <dt class="col-4 text-secondary fw-bold">E-mail:</dt>
-                        <dd class="col-8 mb-0 text-break">@a.Email</dd>
-
-                        <dt class="col-4 text-secondary fw-bold">Endereço:</dt>
-                        <dd class="col-8 mb-0 text-break">@a.Endereco</dd>
-                    </dl>
-
-                    <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-                        <a asp-action="editar" asp-route-id="@a.Id" class="btn btn-primary" title="Editar">
-                            <i class="bi bi-pencil-square"></i>
-                        </a>
-                        <a asp-action="excluir" asp-route-id="@a.Id" class="btn btn-danger" title="Excluir">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </div>
-                </div>
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start gap-3">
+              <h5 class="card-title fw-semibold text-dark medium">@a.Nome</h5>
             </div>
+            <hr class="my-1">
+
+            <dl class="row g-2 mb-4 mt-2">
+              <dt class="col-4 text-secondary fw-bold">CPF:</dt>
+              <dd class="col-8 mb-0 text-break">@a.Cpf</dd>
+
+              <dt class="col-4 text-secondary fw-bold">Telefone</dt>
+              <dd class="col-8 mb-0 text-break">
+                @a.Telefone
+              </dd>
+
+              <dt class="col-4 text-secondary fw-bold">E-mail:</dt>
+              <dd class="col-8 mb-0 text-break">@a.Email</dd>
+
+              <dt class="col-4 text-secondary fw-bold">Endereço:</dt>
+              <dd class="col-8 mb-0 text-break">@a.Endereco</dd>
+            </dl>
+
+            <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
+              <a asp-action="editar" asp-route-id="@a.Id" class="btn btn-primary" title="Editar">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <a asp-action="excluir" asp-route-id="@a.Id" class="btn btn-danger" title="Excluir">
+                <i class="bi bi-trash"></i>
+              </a>
+            </div>
+          </div>
         </div>
-        }
-    </div>
+      </div>
     }
+  </div>
+}
+@* </div> *@

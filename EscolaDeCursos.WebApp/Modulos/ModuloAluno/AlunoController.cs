@@ -1,6 +1,9 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloAluno;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
+using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using EscolaDeCursos.WebApp.Compartilhado.Extensions;
+using EscolaDeCursos.WebApp.Modulos.ModuloTurma;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 namespace EscolaDeCursos.WebApp.Modulos.ModuloAluno;
@@ -8,12 +11,22 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloAluno;
 public class AlunoController(ServicoAluno servicoAluno, IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(SituacaoAluno? situacao = null, Guid? cursoId = null)
     {
-        List<ListarAlunosDto> dtos = servicoAluno.SelecionarTodos();
-        List<ListarAlunosViewModel> listarVms = mapeador.Map<List<ListarAlunosViewModel>>(dtos);
+        List<OpcaoCursoDto> cursosDto = servicoAluno.SelecionarCursos();
+        List<OpcaoCursoViewModel> cursos = mapeador.Map<List<OpcaoCursoViewModel>>(cursosDto);
 
-        return View(listarVms);
+        List<ListarAlunosDto> dtos = servicoAluno.Selecionar(situacao, cursoId);
+
+        ListarAlunosPaginaViewModel pagina = new()
+        {
+            Situacao = situacao,
+            CursoId = cursoId,
+            Cursos = cursos,
+            Alunos = mapeador.Map<List<ListarAlunosViewModel>>(dtos)
+        };
+
+        return View(pagina);
     }
 
     [HttpGet]
