@@ -119,10 +119,12 @@ public class ServicoTurma : ServicoBase<Turma>
         return Result.Ok();
     }
 
-    public List<ListarTurmasDto> SelecionarTodos()
+    public List<ListarTurmasDto> Selecionar(
+        Guid? cursoId = null,
+        FiltroCapacidadeTurma? filtroCapacidade = null)
     {
         return _repositorioTurma
-            .SelecionarTodos()
+            .Selecionar(cursoId, filtroCapacidade)
             .Select(t => new ListarTurmasDto(
                 t.Id,
                 t.Nome,
@@ -133,6 +135,11 @@ public class ServicoTurma : ServicoBase<Turma>
                 t.DataTermino
             ))
             .ToList();
+    }
+
+    public List<ListarTurmasDto> SelecionarTodos()
+    {
+        return Selecionar();
     }
 
     public Result<DetalhesTurmaDto> SelecionarPorId(Guid id)

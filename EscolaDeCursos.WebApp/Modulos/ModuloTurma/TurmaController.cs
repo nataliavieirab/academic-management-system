@@ -1,5 +1,6 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
+using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using EscolaDeCursos.WebApp.Compartilhado.Extensions;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,19 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma;
 public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(Guid? cursoId = null, FiltroCapacidadeTurma? filtroCapacidade = null)
     {
-        List<ListarTurmasDto> dtos = servicoTurma.SelecionarTodos();
-        List<ListarTurmasViewModel> listarVms = mapeador.Map<List<ListarTurmasViewModel>>(dtos);
+        List<ListarTurmasDto> dtos = servicoTurma.Selecionar(cursoId, filtroCapacidade);
 
-        return View(listarVms);
+        ListarTurmasPaginaViewModel pagina = new()
+        {
+            CursoId = cursoId,
+            FiltroCapacidade = filtroCapacidade,
+            Cursos = SelecionarCurso(),
+            Turmas = mapeador.Map<List<ListarTurmasViewModel>>(dtos)
+        };
+
+        return View(pagina);
     }
 
     [HttpGet]

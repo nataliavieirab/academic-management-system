@@ -2,4 +2,7 @@ using EscolaDeCursos.Dominio.Compartilhado;
 
 namespace EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 
-public interface IRepositorioTurma : IRepositorio<Turma>;
+public interface IRepositorioTurma : IRepositorio<Turma>
+{
+    List<Turma> Selecionar(Guid? cursoId = null, FiltroCapacidadeTurma? filtroCapacidade = null);
+}

@@ -1,3 +1,5 @@
+@using EscolaDeCursos.Dominio.Modulos.ModuloTurma
+@model ListarTurmasPaginaViewModel
 @{
   Layout = "_Layout";
   ViewBag.Titulo = "👥 Turmas";
@@ -7,7 +9,27 @@
   ViewBag.ActionBotao = "Cadastrar";
 }
 
-@model List<ListarTurmasViewModel>;
+<form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4 mt-1">
+  <div class="col-md-4">
+    <label asp-for="CursoId" class="form-label fw-semibold text-secondary small">Curso</label>
+    <select asp-for="CursoId" class="form-select"
+      asp-items='@(new SelectList(Model.Cursos ?? new List<OpcaoCursoViewModel>(), "Id", "Titulo"))'>
+      <option value="">Todas</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label asp-for="FiltroCapacidade" class="form-label fw-semibold text-secondary small">Capacidade</label>
+    <select asp-for="FiltroCapacidade" class="form-select"
+      asp-items="Html.GetEnumSelectList<FiltroCapacidadeTurma>()">
+      <option value="">Todas</option>
+    </select>
+  </div>
+  <div class="col-md-auto">
+    <button type="submit" class="btn btn-dark">Filtrar</button>
+  </div>
+</form>
+
+<hr>
 
 @if (TempData["MensagemErro"] is string mensagemErro)
 {
@@ -16,16 +38,18 @@
   </div>
 }
 
-@if (Model.Count == 0)
+@if (Model.Turmas.Count == 0)
 {
   <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
-    Nenhuma turma cadastrada.
+    @(Model.FiltroCapacidade is null && (Model.CursoId is null || Model.CursoId == Guid.Empty)
+      ? "Nenhuma turma cadastrada."
+      : "Nenhuma turma encontrada para este filtro.")
   </div>
 }
 else
 {
-  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
-    @foreach (ListarTurmasViewModel t in Model)
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2 mt-2">
+    @foreach (ListarTurmasViewModel t in Model.Turmas)
     {
       <div class="col">
         <div class="card h-100">
@@ -66,19 +90,6 @@ else
                 <i class="bi bi-people px-1"></i> Matrículas
               </a>
             </div>
-
-            @* <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-              <a asp-controller="Matricula" asp-action="Listar" asp-route-turmaId="@t.Id" class="btn btn-outline-dark"
-                title="Detalhes">
-                <i class="bi bi-people"></i> Matrículas
-              </a>
-              <a asp-action="Editar" asp-route-id="@t.Id" class="btn btn-primary" title="Editar">
-                <i class="bi bi-pencil-square"></i>
-              </a>
-              <a asp-action="Excluir" asp-route-id="@t.Id" class="btn btn-danger" title="Excluir">
-                <i class="bi bi-trash"></i>
-              </a>
-            </div> *@
           </div>
         </div>
       </div>

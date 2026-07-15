@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace EscolaDeCursos.WebApp.Modulos.ModuloTurma;
@@ -12,6 +13,15 @@ public record OpcaoCursoViewModel(
     Guid Id,
     string Titulo
 );
+
+public class ListarTurmasPaginaViewModel
+{
+    public Guid? CursoId { get; set; }
+    public FiltroCapacidadeTurma? FiltroCapacidade { get; set; }
+    public List<OpcaoCursoViewModel> Cursos { get; set; } = [];
+    public List<ListarTurmasViewModel> Turmas { get; set; } = [];
+}
+
 public record ListarTurmasViewModel(
     Guid Id,
     string Nome,
