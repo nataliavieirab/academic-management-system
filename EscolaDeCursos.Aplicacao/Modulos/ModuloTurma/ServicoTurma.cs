@@ -28,20 +28,6 @@ public class ServicoTurma : ServicoBase<Turma>
 
     public Result Cadastrar(CadastrarTurmaDto dto)
     {
-        // Instrutor? instrutorSelecionado = null;
-
-        // if (dto.InstrutorId.HasValue)
-        // {
-        //     instrutorSelecionado = _repositorioInstrutor.SelecionarPorId(dto.InstrutorId.Value);
-
-        //     if (instrutorSelecionado is null)
-        //         return Falha(nameof(dto.InstrutorId), "Selecione um instrutor válido.");
-        // }
-        // else
-        // {
-        //     return Falha(nameof(dto.InstrutorId), "Selecione um instrutor válido.");
-        // }
-
         Instrutor? instrutor = _repositorioInstrutor.SelecionarPorId(dto.InstrutorId);
 
         if (instrutor == null)
