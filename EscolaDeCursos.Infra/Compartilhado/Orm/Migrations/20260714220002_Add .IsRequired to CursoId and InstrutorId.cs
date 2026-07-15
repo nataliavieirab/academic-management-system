@@ -11,12 +11,24 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Remove turmas incompletas antes de tornar CursoId/InstrutorId obrigatórios.
+            // O EF preencheria NULLs com Guid.Empty, o que viola as FKs.
+            migrationBuilder.Sql("""
+                DELETE FROM [TBMatricula]
+                WHERE [TurmaId] IN (
+                    SELECT [Id] FROM [TBTurma]
+                    WHERE [CursoId] IS NULL OR [InstrutorId] IS NULL
+                );
+
+                DELETE FROM [TBTurma]
+                WHERE [CursoId] IS NULL OR [InstrutorId] IS NULL;
+                """);
+
             migrationBuilder.AlterColumn<Guid>(
                 name: "InstrutorId",
                 table: "TBTurma",
                 type: "uniqueidentifier",
                 nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
                 oldClrType: typeof(Guid),
                 oldType: "uniqueidentifier",
                 oldNullable: true);
@@ -26,7 +38,6 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                 table: "TBTurma",
                 type: "uniqueidentifier",
                 nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
                 oldClrType: typeof(Guid),
                 oldType: "uniqueidentifier",
                 oldNullable: true);
