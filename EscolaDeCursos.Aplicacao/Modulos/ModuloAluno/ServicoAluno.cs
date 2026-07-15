@@ -1,17 +1,21 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
+using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using FluentResults;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloAluno;
 
 public class ServicoAluno : ServicoBase<Aluno>
 {
     private readonly IRepositorioAluno repositorioAluno;
+    private readonly IRepositorioMatricula repositorioMatricula;
 
     public ServicoAluno(
-        IRepositorioAluno repositorioAluno
+        IRepositorioAluno repositorioAluno,
+        IRepositorioMatricula repositorioMatricula
     )
     {
         this.repositorioAluno = repositorioAluno;
+        this.repositorioMatricula = repositorioMatricula;
     }
 
     public Result Cadastrar(CadastrarAlunoDto dto)
@@ -80,6 +84,20 @@ public class ServicoAluno : ServicoBase<Aluno>
 
         if (aluno == null)
             return Result.Fail("Aluno não encontrado.");
+
+        List<Matricula> matriculasDoAluno = repositorioMatricula
+            .SelecionarTodos()
+            .Where(m => m.AlunoId == id)
+            .ToList();
+
+        if (matriculasDoAluno.Any(m => m.Situacao == SituacaoAluno.Ativa))
+            return Falha(
+                string.Empty,
+                "Não é permitido excluir um aluno com matrícula ativa. Cancele ou conclua a matrícula antes de excluir."
+            );
+
+        foreach (Matricula matricula in matriculasDoAluno)
+            repositorioMatricula.Excluir(matricula.Id);
 
         repositorioAluno.Excluir(id);
 
