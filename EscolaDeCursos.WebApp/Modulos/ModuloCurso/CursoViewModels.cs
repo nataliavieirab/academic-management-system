@@ -4,6 +4,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EscolaDeCursos.WebApp.Modulos.ModuloCurso;
 
+public class ListarCursosPaginaViewModel
+{
+    public Guid? CategoriaId { get; set; }
+    public Nivel? Nivel { get; set; }
+    public FiltroTurmasCurso? FiltroTurmas { get; set; }
+    public List<SelectListItem> Categorias { get; set; } = [];
+    public List<ListarCursosViewModel> Cursos { get; set; } = [];
+}
+
 public record ListarCursosViewModel(
     Guid Id,
     string Titulo,

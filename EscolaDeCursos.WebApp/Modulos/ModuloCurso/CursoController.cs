@@ -1,6 +1,7 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using EscolaDeCursos.WebApp.Compartilhado.Extensions;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,23 @@ public class CursoController(
     IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(
+        Guid? categoriaId = null,
+        Nivel? nivel = null,
+        FiltroTurmasCurso? filtroTurmas = null)
     {
-        List<ListarCursosDto> dtos = servicoCurso.SelecionarTodos();
-        List<ListarCursosViewModel> listarVms = mapeador.Map<List<ListarCursosViewModel>>(dtos);
+        List<ListarCursosDto> dtos = servicoCurso.Selecionar(categoriaId, nivel, filtroTurmas);
 
-        return View(listarVms);
+        ListarCursosPaginaViewModel pagina = new()
+        {
+            CategoriaId = categoriaId,
+            Nivel = nivel,
+            FiltroTurmas = filtroTurmas,
+            Categorias = ObterCategoriasDisponiveis(),
+            Cursos = mapeador.Map<List<ListarCursosViewModel>>(dtos)
+        };
+
+        return View(pagina);
     }
 
     [HttpGet]

@@ -96,10 +96,13 @@ public class ServicoCurso : ServicoBase<Curso>
         return Result.Ok();
     }
 
-    public List<ListarCursosDto> SelecionarTodos()
+    public List<ListarCursosDto> Selecionar(
+        Guid? categoriaId = null,
+        Nivel? nivel = null,
+        FiltroTurmasCurso? filtroTurmas = null)
     {
         return repositorioCurso
-            .SelecionarTodos()
+            .Selecionar(categoriaId, nivel, filtroTurmas)
             .Select(c => new ListarCursosDto(
                 c.Id,
                 c.Titulo,
@@ -110,6 +113,11 @@ public class ServicoCurso : ServicoBase<Curso>
                 c.CargaHoraria
             ))
             .ToList();
+    }
+
+    public List<ListarCursosDto> SelecionarTodos()
+    {
+        return Selecionar();
     }
 
     public List<ListarCursosDto> SelecionarPorCategoria(Guid categoriaId)
