@@ -98,11 +98,10 @@ public class ServicoMatricula : ServicoBase<Matricula>
         return Result.Ok();
     }
 
-    public List<ListarMatriculasDto> SelecionarPorTurma(Guid turmaId)
+    public List<ListarMatriculasDto> SelecionarPorTurma(Guid turmaId, SituacaoAluno? situacao = null)
     {
         return _repositorioMatricula
-            .SelecionarTodos()
-            .Where(m => m.TurmaId == turmaId)
+            .Selecionar(turmaId, situacao)
             .Select(m => new ListarMatriculasDto(
                 m.Id,
                 m.TurmaId,

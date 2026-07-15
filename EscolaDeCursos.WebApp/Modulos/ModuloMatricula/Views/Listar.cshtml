@@ -1,16 +1,29 @@
 @using EscolaDeCursos.Dominio.Modulos.ModuloMatricula
-
+@model ListarMatriculasPaginaViewModel
 @{
   Layout = "_Layout";
-  ViewBag.Titulo = $"📝 Matrículas — {ViewBag.TurmaNome}";
+  ViewBag.Titulo = $"📝 Matrículas — {Model.TurmaNome}";
   ViewBag.Info = "Visualize e gerencie as matrículas desta turma.";
   ViewBag.TextoBotao = "Nova Matricula";
   ViewBag.ControllerBotao = "Matricula";
   ViewBag.ActionBotao = "Cadastrar";
-  ViewBag.IdBotao = ViewBag.TurmaId;
+  ViewBag.IdBotao = Model.TurmaId;
 }
 
-@model List<ListarMatriculasViewModel>;
+<form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4 mt-1">
+  <input type="hidden" asp-for="TurmaId" />
+  <div class="col-md-4">
+    <label asp-for="Situacao" class="form-label fw-semibold text-secondary small">Situação</label>
+    <select asp-for="Situacao" class="form-select" asp-items="Html.GetEnumSelectList<SituacaoAluno>()">
+      <option value="">Todas</option>
+    </select>
+  </div>
+  <div class="col-md-auto">
+    <button type="submit" class="btn btn-dark">Filtrar</button>
+  </div>
+</form>
+
+<hr>
 
 @if (TempData["MensagemErro"] is string mensagemErro)
 {
@@ -26,16 +39,18 @@
   </div>
 }
 
-@if (Model.Count == 0)
+@if (Model.Matriculas.Count == 0)
 {
   <div class="alert alert-primary border-start border-primary border-4 rounded-3" role="alert">
-    Nenhuma matrícula cadastrada.
+    @(Model.Situacao is null
+      ? "Nenhuma matrícula cadastrada."
+      : "Nenhuma matrícula encontrada para este filtro.")
   </div>
 }
 else
 {
-  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
-    @foreach (ListarMatriculasViewModel m in Model)
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2 mt-2">
+    @foreach (ListarMatriculasViewModel m in Model.Matriculas)
     {
       <div class="col">
         <div class="card h-100">

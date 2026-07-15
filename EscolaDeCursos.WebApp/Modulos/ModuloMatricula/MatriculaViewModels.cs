@@ -9,6 +9,14 @@ public record OpcaoAlunoViewModel(
     string Nome
 );
 
+public class ListarMatriculasPaginaViewModel
+{
+    public Guid TurmaId { get; set; }
+    public string TurmaNome { get; set; } = string.Empty;
+    public SituacaoAluno? Situacao { get; set; }
+    public List<ListarMatriculasViewModel> Matriculas { get; set; } = [];
+}
+
 public record ListarMatriculasViewModel(
     Guid Id,
     Guid TurmaId,

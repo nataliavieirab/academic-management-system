@@ -1,6 +1,7 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloMatricula;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
+using EscolaDeCursos.Dominio.Modulos.ModuloMatricula;
 using EscolaDeCursos.WebApp.Compartilhado.Extensions;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ public class MatriculaController(
     IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar(Guid turmaId)
+    public ActionResult Listar(Guid turmaId, SituacaoAluno? situacao = null)
     {
         Result<DetalhesTurmaDto> resultadoTurma = servicoTurma.SelecionarPorId(turmaId);
 
@@ -23,13 +24,17 @@ public class MatriculaController(
             return RedirectToAction("Listar", "Turma");
         }
 
-        List<ListarMatriculasDto> dtos = servicoMatricula.SelecionarPorTurma(turmaId);
-        List<ListarMatriculasViewModel> vms = mapeador.Map<List<ListarMatriculasViewModel>>(dtos);
+        List<ListarMatriculasDto> dtos = servicoMatricula.SelecionarPorTurma(turmaId, situacao);
 
-        ViewBag.TurmaId = turmaId;
-        ViewBag.TurmaNome = resultadoTurma.Value.Nome;
+        ListarMatriculasPaginaViewModel pagina = new()
+        {
+            TurmaId = turmaId,
+            TurmaNome = resultadoTurma.Value.Nome,
+            Situacao = situacao,
+            Matriculas = mapeador.Map<List<ListarMatriculasViewModel>>(dtos)
+        };
 
-        return View(vms);
+        return View(pagina);
     }
 
     [HttpGet]
