@@ -130,10 +130,10 @@ public class ServicoInstrutor : ServicoBase<Instrutor>
             );
     }
 
-    public List<ListarInstrutoresDto> SelecionarTodos()
+    public List<ListarInstrutoresDto> Selecionar(FiltroTurmasInstrutor? filtroTurmas = null)
     {
         return repositorioInstrutor
-            .SelecionarTodos()
+            .Selecionar(filtroTurmas)
             .Select(i => new ListarInstrutoresDto(
                 i.Id,
                 i.Nome,
@@ -142,6 +142,11 @@ public class ServicoInstrutor : ServicoBase<Instrutor>
                 i.Email
             ))
             .ToList();
+    }
+
+    public List<ListarInstrutoresDto> SelecionarTodos()
+    {
+        return Selecionar();
     }
 
     public Result<DetalhesInstrutorDto> SelecionarPorId(Guid id)

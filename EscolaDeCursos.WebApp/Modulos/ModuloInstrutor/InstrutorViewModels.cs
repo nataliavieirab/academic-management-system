@@ -1,6 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 
 namespace EscolaDeCursos.WebApp.Modulos.ModuloInstrutor;
+
+public class ListarInstrutoresPaginaViewModel
+{
+    public FiltroTurmasInstrutor? FiltroTurmas { get; set; }
+    public List<ListarInstrutoresViewModel> Instrutores { get; set; } = [];
+}
 
 public record ListarInstrutoresViewModel(
     Guid Id,

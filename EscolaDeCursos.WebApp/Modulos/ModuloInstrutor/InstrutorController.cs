@@ -1,5 +1,6 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloInstrutor;
+using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 using EscolaDeCursos.WebApp.Compartilhado.Extensions;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,17 @@ namespace EscolaDeCursos.WebApp.Modulos.ModuloInstrutor;
 public class InstrutorController(ServicoInstrutor servicoInstrutor, IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(FiltroTurmasInstrutor? filtroTurmas = null)
     {
-        List<ListarInstrutoresDto> dtos = servicoInstrutor.SelecionarTodos();
-        List<ListarInstrutoresViewModel> listarVms = mapeador.Map<List<ListarInstrutoresViewModel>>(dtos);
+        List<ListarInstrutoresDto> dtos = servicoInstrutor.Selecionar(filtroTurmas);
 
-        return View(listarVms);
+        ListarInstrutoresPaginaViewModel pagina = new()
+        {
+            FiltroTurmas = filtroTurmas,
+            Instrutores = mapeador.Map<List<ListarInstrutoresViewModel>>(dtos)
+        };
+
+        return View(pagina);
     }
 
     [HttpGet]
