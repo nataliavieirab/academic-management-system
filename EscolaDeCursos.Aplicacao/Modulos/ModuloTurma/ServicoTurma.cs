@@ -73,7 +73,6 @@ public class ServicoTurma : ServicoBase<Turma>
         if (instrutor == null)
             return Falha(nameof(dto.InstrutorId), "Instrutor não encontrado.");
 
-
         Curso? curso = _repositorioCurso.SelecionarPorId(dto.CursoId);
 
         if (curso == null)

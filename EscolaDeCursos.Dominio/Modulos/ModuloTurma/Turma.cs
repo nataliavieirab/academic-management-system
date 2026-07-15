@@ -14,7 +14,7 @@ public class Turma : EntidadeBase<Turma>
     public DateOnly DataInicio { get; set; }
     public DateOnly DataTermino { get; set; }
 
-    public Turma()
+    protected Turma()
     {
     }
 

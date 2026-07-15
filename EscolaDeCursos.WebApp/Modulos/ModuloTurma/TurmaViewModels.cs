@@ -29,10 +29,10 @@ public record CadastrarTurmaViewModel(
     string Nome,
 
     [Required(ErrorMessage = "O campo \"Curso\" deve ser selecionado.")]
-    Guid CursoId,
+    Guid? CursoId,
 
     [Required(ErrorMessage = "O campo \"Instrutor\" deve ser selecionado.")]
-    Guid InstrutorId,
+    Guid? InstrutorId,
 
     [Required(ErrorMessage = "O campo \"Capacidade Máxima\" deve ser preenchido.")]
     [Range(1, 100, ErrorMessage = "A capacidade deve ser entre 1 e 100 alunos.")]
@@ -61,10 +61,10 @@ public record EditarTurmaViewModel(
     string Nome,
 
     [Required(ErrorMessage = "O campo \"Instrutor\" deve ser selecionado.")]
-    Guid InstrutorId,
+    Guid? InstrutorId,
 
     [Required(ErrorMessage = "O campo \"Curso\" deve ser selecionado.")]
-    Guid CursoId,
+    Guid? CursoId,
 
     [Required(ErrorMessage = "O campo \"Capacidade Máxima\" deve ser preenchido.")]
     [Range(1, 100, ErrorMessage = "A capacidade deve ser entre 1 e 100 alunos.")]

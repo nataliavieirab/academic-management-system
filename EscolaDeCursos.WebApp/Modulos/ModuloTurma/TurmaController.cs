@@ -22,8 +22,8 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
     {
         CadastrarTurmaViewModel cadastrarVm = new CadastrarTurmaViewModel(
             string.Empty,
-            Guid.Empty,
-            Guid.Empty,
+            null,
+            null,
             0,
             DateOnly.FromDateTime(DateTime.Today),
             DateOnly.FromDateTime(DateTime.Today.AddMonths(1)),
@@ -37,12 +37,12 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
     [HttpPost]
     public ActionResult Cadastrar(CadastrarTurmaViewModel cadastrarVm)
     {
-
         if (!ModelState.IsValid)
-            return View(cadastrarVm with { Cursos = SelecionarCurso() });
-
-        if (!ModelState.IsValid)
-            return View(cadastrarVm with { Instrutores = SelecionarInstrutor() });
+            return View(cadastrarVm with
+            {
+                Cursos = SelecionarCurso(),
+                Instrutores = SelecionarInstrutor()
+            });
 
         CadastrarTurmaDto dto = mapeador.Map<CadastrarTurmaDto>(cadastrarVm);
         Result resultado = servicoTurma.Cadastrar(dto);
@@ -51,7 +51,11 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
         {
             ModelState.AddModelError(resultado);
 
-            return View(cadastrarVm with { Instrutores = SelecionarInstrutor() });
+            return View(cadastrarVm with
+            {
+                Cursos = SelecionarCurso(),
+                Instrutores = SelecionarInstrutor()
+            });
         }
 
         return RedirectToAction(nameof(Listar));
@@ -109,10 +113,11 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
     public ActionResult Editar(EditarTurmaViewModel editarVm)
     {
         if (!ModelState.IsValid)
-            return View(editarVm with { Instrutores = SelecionarInstrutor() });
-
-        if (!ModelState.IsValid)
-            return View(editarVm with { Cursos = SelecionarCurso() });
+            return View(editarVm with
+            {
+                Cursos = SelecionarCurso(),
+                Instrutores = SelecionarInstrutor()
+            });
 
         EditarTurmaDto dto = mapeador.Map<EditarTurmaDto>(editarVm);
         Result resultado = servicoTurma.Editar(dto);
@@ -120,13 +125,11 @@ public class TurmaController(ServicoTurma servicoTurma, IMapper mapeador) : Cont
         if (resultado.IsFailed)
         {
             ModelState.AddModelError(resultado);
-            return View(editarVm with { Instrutores = SelecionarInstrutor() });
-        }
-
-        if (resultado.IsFailed)
-        {
-            ModelState.AddModelError(resultado);
-            return View(editarVm with { Cursos = SelecionarCurso() });
+            return View(editarVm with
+            {
+                Cursos = SelecionarCurso(),
+                Instrutores = SelecionarInstrutor()
+            });
         }
 
         TempData["MensagemSucesso"] = "Turma atualizada com sucesso.";
