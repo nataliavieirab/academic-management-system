@@ -120,23 +120,6 @@ public class ServicoCurso : ServicoBase<Curso>
         return Selecionar();
     }
 
-    public List<ListarCursosDto> SelecionarPorCategoria(Guid categoriaId)
-    {
-        return repositorioCurso
-            .SelecionarTodos()
-            .Where(c => c.CategoriaId == categoriaId)
-            .Select(c => new ListarCursosDto(
-                c.Id,
-                c.Titulo,
-                c.Descricao,
-                c.CategoriaId,
-                c.Categoria.Titulo,
-                c.Nivel,
-                c.CargaHoraria
-            ))
-            .ToList();
-    }
-
     public Result<DetalhesCursoDto> SelecionarPorId(Guid id)
     {
         Curso? curso = repositorioCurso.SelecionarPorId(id);

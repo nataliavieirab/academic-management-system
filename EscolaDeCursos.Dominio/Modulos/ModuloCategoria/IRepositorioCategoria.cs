@@ -1,4 +1,7 @@
 using EscolaDeCursos.Dominio.Compartilhado;
 namespace EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
 
-public interface IRepositorioCategoria : IRepositorio<Categoria>;
+public interface IRepositorioCategoria : IRepositorio<Categoria>
+{
+    List<Categoria> Selecionar(Guid? cursoId = null);
+}

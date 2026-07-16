@@ -1,45 +1,32 @@
 using AutoMapper;
 using EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
-using EscolaDeCursos.Aplicacao.Modulos.ModuloCurso;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
 using EscolaDeCursos.WebApp.Compartilhado.Extensions;
-using EscolaDeCursos.WebApp.Modulos.ModuloCurso;
+using EscolaDeCursos.WebApp.Modulos.ModuloTurma;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 namespace EscolaDeCursos.WebApp.Modulos.ModuloCategoria;
 
 public class CategoriaController(
     ServicoCategoria servicoCategoria,
-    ServicoCurso servicoCurso,
     IMapper mapeador) : Controller
 {
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(Guid? cursoId = null)
     {
-        List<ListarCategoriasDto> dtos = servicoCategoria.SelecionarTodos();
-        List<ListarCategoriasViewModel> listarVms = mapeador.Map<List<ListarCategoriasViewModel>>(dtos);
+        List<OpcaoCursoDto> cursosDto = servicoCategoria.SelecionarCursos();
+        List<OpcaoCursoViewModel> cursos = mapeador.Map<List<OpcaoCursoViewModel>>(cursosDto);
 
-        return View(listarVms);
-    }
+        List<ListarCategoriasDto> dtos = servicoCategoria.Selecionar(cursoId);
 
-    [HttpGet]
-    public ActionResult Cursos(Guid id)
-    {
-        Result<DetalhesCategoriaDto> resultado = servicoCategoria.SelecionarPorId(id);
-
-        if (resultado.IsFailed)
+        ListarCategoriasPaginaViewModel pagina = new()
         {
-            TempData.AddErrorMessage(resultado);
+            CursoId = cursoId,
+            Cursos = cursos,
+            Categorias = mapeador.Map<List<ListarCategoriasViewModel>>(dtos)
+        };
 
-            return RedirectToAction(nameof(Listar));
-        }
-
-        List<ListarCursosDto> dtos = servicoCurso.SelecionarPorCategoria(id);
-        List<ListarCursosViewModel> vms = mapeador.Map<List<ListarCursosViewModel>>(dtos);
-
-        ViewBag.CategoriaId = id;
-        ViewBag.CategoriaTitulo = resultado.Value.Titulo;
-
-        return View(vms);
+        return View(pagina);
     }
 
     [HttpGet]

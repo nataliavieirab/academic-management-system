@@ -1,5 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using EscolaDeCursos.WebApp.Modulos.ModuloTurma;
+
 namespace EscolaDeCursos.WebApp.Modulos.ModuloCategoria;
+
+public class ListarCategoriasPaginaViewModel
+{
+    public Guid? CursoId { get; set; }
+    public List<OpcaoCursoViewModel> Cursos { get; set; } = [];
+    public List<ListarCategoriasViewModel> Categorias { get; set; } = [];
+}
 
 public record ListarCategoriasViewModel(
   Guid Id,

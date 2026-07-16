@@ -1,4 +1,5 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
+using EscolaDeCursos.Aplicacao.Modulos.ModuloTurma;
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
 using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using FluentResults;
@@ -69,14 +70,27 @@ public class ServicoCategoria : ServicoBase<Categoria>
         return Result.Ok();
     }
 
-    public List<ListarCategoriasDto> SelecionarTodos()
+    public List<ListarCategoriasDto> Selecionar(Guid? cursoId = null)
     {
         return repositorioCategoria
-            .SelecionarTodos()
+            .Selecionar(cursoId)
             .Select(c => new ListarCategoriasDto(
                 c.Id,
                 c.Titulo
             ))
+            .ToList();
+    }
+
+    public List<ListarCategoriasDto> SelecionarTodos()
+    {
+        return Selecionar();
+    }
+
+    public List<OpcaoCursoDto> SelecionarCursos()
+    {
+        return repositorioCurso
+            .SelecionarTodos()
+            .Select(c => new OpcaoCursoDto(c.Id, c.Titulo))
             .ToList();
     }
 
