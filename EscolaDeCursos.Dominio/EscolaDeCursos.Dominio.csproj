@@ -10,6 +10,7 @@
   <ItemGroup>
     <Folder Include="Modulos/ModuloAluno/" />
     <Folder Include="Modulos/ModuloCategoria/" />
+    <Folder Include="Modulos/ModuloInstituicao/" />
     <Folder Include="Modulos/ModuloInstrutor/" />
     <Folder Include="Modulos/ModuloMatricula/" />
     <Folder Include="Modulos/ModuloTurma/" />

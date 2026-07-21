@@ -33,14 +33,30 @@
       </button>
 
       <div class="collapse navbar-collapse" id="menuPrincipal">
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link fw-medium text-white" asp-controller="Home" asp-action="Index">Início</a>
-          <a class="nav-link fw-medium text-white" asp-controller="Curso" asp-action="Listar">Cursos</a>
-          <a class="nav-link fw-medium text-white" asp-controller="Categoria" asp-action="Listar">Categorias</a>
-          <a class="nav-link fw-medium text-white" asp-controller="Turma" asp-action="Listar">Turmas</a>
-          <a class="nav-link fw-medium text-white" asp-controller="Aluno" asp-action="Listar">Alunos</a>
-          <a class="nav-link fw-medium text-white" asp-controller="Instrutor" asp-action="Listar">Instrutores</a>
-        </div>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link fw-medium text-white" asp-controller="Home" asp-action="Index">Início</a>
+            <a class="nav-link fw-medium text-white" asp-controller="Curso" asp-action="Listar">Cursos</a>
+            <a class="nav-link fw-medium text-white" asp-controller="Categoria" asp-action="Listar">Categorias</a>
+            <a class="nav-link fw-medium text-white" asp-controller="Turma" asp-action="Listar">Turmas</a>
+            <a class="nav-link fw-medium text-white" asp-controller="Aluno" asp-action="Listar">Alunos</a>
+            <a class="nav-link fw-medium text-white" asp-controller="Instrutor" asp-action="Listar">Instrutores</a>
+          </div>
+
+           <div class="dropdown p-2 ms-3">
+              <button class="btn btn-outline-primary rounded-3 btn-sm dropdown-toggle fw-medium" style="background-image: linear-gradient(-20deg, #accbee 0%, #e7f0fd 100%);" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                @User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <form asp-controller="Autenticacao" asp-action="Sair" method="post" class="d-inline">
+                    <button type="submit" class="dropdown-item text-danger fw-semibold" >Sair</button>
+                  </form>
+                </li>
+              </ul>
+          </div>
+        }
       </div>
     </div>
   </nav>
