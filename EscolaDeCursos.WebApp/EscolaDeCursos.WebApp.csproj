@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Compartilhado/Identity/" />
     <Folder Include="Modulos/ModuloAutenticacao/" />
     <Folder Include="Modulos/ModuloAutenticacao/Views/" />
   </ItemGroup>
