@@ -13,7 +13,7 @@
 <form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4 mt-1">
   <input type="hidden" asp-for="TurmaId" />
   <div class="col-md-4">
-    <label asp-for="Situacao" class="form-label fw-semibold text-secondary small">Situação</label>
+    <label asp-for="Situacao" class="form-label fw-semibold text-body-secondary small">Situação</label>
     <select asp-for="Situacao" class="form-select" asp-items="Html.GetEnumSelectList<SituacaoAluno>()">
       <option value="">Todas</option>
     </select>
@@ -61,13 +61,13 @@ else
             <hr class="my-1">
 
             <dl class="row g-2 mb-4 mt-2">
-              <dt class="col-4 text-secondary fw-bold">Matrícula:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Matrícula:</dt>
               <dd class="col-8 mb-0"><span class="badge text-bg-primary rounded-pill">@m.Id.ToString()[..8]</span></dd>
 
-              <dt class="col-4 text-secondary fw-bold">Data:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Data:</dt>
               <dd class="col-8 mb-0">@m.Data.ToString("dd/MM/yyyy")</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Situação:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Situação:</dt>
               <dd class="col-8 mb-0">
                 @{
                   var situacaoBadge = m.Situacao switch

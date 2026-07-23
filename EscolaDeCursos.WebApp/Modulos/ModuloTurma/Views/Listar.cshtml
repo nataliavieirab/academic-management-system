@@ -11,14 +11,14 @@
 
 <form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4 mt-1">
   <div class="col-md-4">
-    <label asp-for="CursoId" class="form-label fw-semibold text-secondary small">Curso</label>
+    <label asp-for="CursoId" class="form-label fw-semibold text-body-secondary small">Curso</label>
     <select asp-for="CursoId" class="form-select"
       asp-items='@(new SelectList(Model.Cursos ?? new List<OpcaoCursoViewModel>(), "Id", "Titulo"))'>
       <option value="">Todas</option>
     </select>
   </div>
   <div class="col-md-4">
-    <label asp-for="FiltroCapacidade" class="form-label fw-semibold text-secondary small">Capacidade</label>
+    <label asp-for="FiltroCapacidade" class="form-label fw-semibold text-body-secondary small">Capacidade</label>
     <select asp-for="FiltroCapacidade" class="form-select"
       asp-items="Html.GetEnumSelectList<FiltroCapacidadeTurma>()">
       <option value="">Todas</option>
@@ -60,19 +60,19 @@ else
             <hr class="my-1">
 
             <dl class="row g-2 mb-4 mt-2">
-              <dt class="col-4 text-secondary fw-bold">Curso:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Curso:</dt>
               <dd class="col-8 mb-0 text-break">@t.CursoTitulo</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Instrutor:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Instrutor:</dt>
               <dd class="col-8 mb-0 text-break">@t.InstrutorNome</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Capacidade:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Capacidade:</dt>
               <dd class="col-8 mb-0">@t.CapacidadeMaxima</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Início:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Início:</dt>
               <dd class="col-8 mb-0">@t.DataInicio.ToString("dd/MM/yyyy")</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Término:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Término:</dt>
               <dd class="col-8 mb-0">@t.DataTermino.ToString("dd/MM/yyyy")</dd>
             </dl>
 

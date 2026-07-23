@@ -11,7 +11,7 @@
 
 <form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4 mt-1">
   <div class="col-md-3">
-    <label asp-for="FiltroTurmas" class="form-label fw-semibold text-secondary small">Turmas</label>
+    <label asp-for="FiltroTurmas" class="form-label fw-semibold text-body-secondary small">Turmas</label>
     <select asp-for="FiltroTurmas" class="form-select" asp-items="Html.GetEnumSelectList<FiltroTurmasInstrutor>()">
       <option value="">Todos</option>
     </select>
@@ -51,15 +51,15 @@ else
             <hr class="my-1">
 
             <dl class="row g-2 mb-4 mt-2">
-              <dt class="col-4 text-secondary fw-bold">CPF:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">CPF:</dt>
               <dd class="col-8 mb-0 text-break">@i.Cpf</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Telefone</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Telefone</dt>
               <dd class="col-8 mb-0 text-break">
                 @i.Telefone
               </dd>
 
-              <dt class="col-4 text-secondary fw-bold">E-mail:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">E-mail:</dt>
               <dd class="col-8 mb-0 text-break">@i.Email</dd>
             </dl>
 

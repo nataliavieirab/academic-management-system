@@ -4,7 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  @* Importação do CSS do Bootstrap *@
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
@@ -13,48 +17,60 @@
   <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 
   <title>@ViewBag.Titulo Escola de Cursos</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
-    rel="stylesheet">
 </head>
 
 <body class="@ViewData["BodyClass"]">
+  @{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+  }
+
   @* Barra de Navegação *@
-  <nav class="navbar navbar-expand-lg bg-white border-bottom"
-    style="background-image: radial-gradient(circle,rgba(50, 121, 221, 1) 0%, rgba(54, 92, 145, 1) 100%);">
+  <nav class="navbar navbar-expand-lg site-navbar">
     <div class="container">
-      <a class="navbar-brand fw-semibold text-white" asp-controller="Home" asp-action="Index">Escola de Cursos</a>
+      <a class="navbar-brand" asp-controller="Home" asp-action="Index">Escola de Cursos</a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="menuPrincipal">
         @if (User.Identity?.IsAuthenticated == true)
         {
-          <div class="navbar-nav ms-auto">
-            <a class="nav-link fw-medium text-white" asp-controller="Home" asp-action="Index">Início</a>
-            <a class="nav-link fw-medium text-white" asp-controller="Curso" asp-action="Listar">Cursos</a>
-            <a class="nav-link fw-medium text-white" asp-controller="Categoria" asp-action="Listar">Categorias</a>
-            <a class="nav-link fw-medium text-white" asp-controller="Turma" asp-action="Listar">Turmas</a>
-            <a class="nav-link fw-medium text-white" asp-controller="Aluno" asp-action="Listar">Alunos</a>
-            <a class="nav-link fw-medium text-white" asp-controller="Instrutor" asp-action="Listar">Instrutores</a>
+          <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <a class="nav-link @(currentController == "Home" ? "nav-pill-active" : null)" asp-controller="Home"
+              asp-action="Index">Início</a>
+            <a class="nav-link @(currentController == "Curso" || currentController == "Modulo" ? "nav-pill-active" : null)"
+              asp-controller="Curso" asp-action="Listar">Cursos</a>
+            <a class="nav-link @(currentController == "Categoria" ? "nav-pill-active" : null)" asp-controller="Categoria"
+              asp-action="Listar">Categorias</a>
+            <a class="nav-link @(currentController == "Turma" || currentController == "Matricula" ? "nav-pill-active" : null)"
+              asp-controller="Turma" asp-action="Listar">Turmas</a>
+            <a class="nav-link @(currentController == "Aluno" ? "nav-pill-active" : null)" asp-controller="Aluno"
+              asp-action="Listar">Alunos</a>
+            <a class="nav-link @(currentController == "Instrutor" ? "nav-pill-active" : null)" asp-controller="Instrutor"
+              asp-action="Listar">Instrutores</a>
           </div>
 
-           <div class="dropdown p-2 ms-3">
-              <button class="btn btn-outline-primary rounded-3 btn-sm dropdown-toggle fw-medium" style="background-image: linear-gradient(-20deg, #accbee 0%, #e7f0fd 100%);" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                @User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                  <form asp-controller="Autenticacao" asp-action="Sair" method="post" class="d-inline">
-                    <button type="submit" class="dropdown-item text-danger fw-semibold" >Sair</button>
-                  </form>
-                </li>
-              </ul>
+          <div class="dropdown ms-lg-3">
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle fw-medium" type="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              @User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <form asp-controller="Autenticacao" asp-action="Sair" method="post" class="d-inline">
+                  <button type="submit" class="dropdown-item text-danger fw-semibold">Sair</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        }
+        else
+        {
+          <div class="navbar-nav ms-auto align-items-lg-center">
+            <a class="nav-link @(currentController == "Autenticacao" ? "nav-pill-active" : null)"
+              asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
           </div>
         }
       </div>
@@ -67,15 +83,15 @@
     <header class="container py-4 mt-4">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
         <div>
-          <h2 class="fw-semibold" style="color: rgb(0, 35, 84)">@ViewBag.Titulo</h2>
+          <h2 class="fw-semibold page-title">@ViewBag.Titulo</h2>
           @if (!string.IsNullOrEmpty(ViewBag.Info as string))
           {
-            <p class="mb-0">@ViewBag.Info</p>
+            <p class="mb-0 page-info">@ViewBag.Info</p>
           }
         </div>
         @if (ViewBag.TextoBotao != null)
         {
-          <a class="btn btn-primary rounded-2 px-4 align-self-start mt-4" asp-controller="@ViewBag.ControllerBotao"
+          <a class="btn btn-primary px-4 align-self-start mt-md-4" asp-controller="@ViewBag.ControllerBotao"
             asp-action="@ViewBag.ActionBotao" asp-route-id="@ViewBag.IdBotao">
             @ViewBag.TextoBotao
           </a>
@@ -83,24 +99,6 @@
       </div>
     </header>
   }
-
-
-  @* <header class="container py-4 mt-4">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
-            <div>
-                <h2 class="fw-semibold" style="color: rgb(0, 35, 84)">@ViewBag.Titulo</h2>
-                <p class="mb-0">@ViewBag.Info</p>
-            </div>
-
-            @if (ViewBag.TextoBotao != null)
-            {
-            <a class="btn btn-primary rounded-2 px-4 align-self-start mt-4" asp-controller="@ViewBag.ControllerBotao"
-                asp-action="@ViewBag.ActionBotao" asp-route-id="@ViewBag.IdBotao">
-                @ViewBag.TextoBotao
-            </a>
-            }
-        </div>
-    </header> *@
 
   @* Conteúdo da Página *@
   <main class="container pb-5">

@@ -3,68 +3,35 @@
   ViewData["BodyClass"] = "page-index";
 }
 
-<div class="row index-container">
-  <div class="col-lg-7">
-    <h1 class="display-5 fw-semibold mb-3" style="color: rgb(0, 35, 84)">Escola de Cursos</h1>
-    <p class="lead text-secondary mb-4">
+<section class="row hero g-4 g-lg-5">
+  <div class="col-lg-5 d-flex flex-column justify-content-center">
+    <h1 class="display-5 hero-title mb-3">Escola de Cursos</h1>
+    <p class="hero-lead mb-4">
       Facilite a gestão da sua escola organizando cursos, turmas e matrículas, acompanhando instrutores e alunos com
       eficiência e clareza.
     </p>
-    <div class="d-flex flex-wrap gap-2 mt-4 d-none d-md-block">
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Curso" asp-action="Listar">Cursos</a>
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Categoria"
-         asp-action="Listar">Categorias</a>
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Turma" asp-action="Listar">Turmas</a>
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Aluno" asp-action="Listar">Alunos</a>
-      <a class="btn btn-primary rounded-pill px-4 mb-3 btn-home" asp-controller="Instrutor"
-         asp-action="Listar">Instrutores</a>
 
-      <div class="index-img-container">
-        <img src="~/img/escoladecursos.png" alt="Cursos" class="index-img" />
-      </div>
+    <div class="d-flex flex-wrap align-items-center gap-3 hero-actions">
+      <a class="btn btn-primary btn-hero-primary" asp-controller="Curso" asp-action="Listar">Ver cursos</a>
+      @if (User.Identity?.IsAuthenticated != true)
+      {
+        <a class="link-hero-secondary" asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
+      }
+      else
+      {
+        <a class="link-hero-secondary" asp-controller="Turma" asp-action="Listar">Ver turmas</a>
+      }
     </div>
 
+    @* <ul class="hero-dots" aria-hidden="true">
+      <li><span class="hero-dot is-active"></span></li>
+      <li><span class="hero-dot"></span></li>
+      <li><span class="hero-dot"></span></li>
+      <li><span class="hero-dot"></span></li>
+    </ul> *@
   </div>
 
-  <div class="col-lg-5">
-    <div class="card border-primary-subtle shadow-sm rounded-4"
-         style="background-image: radial-gradient(circle,rgba(50, 121, 221, 1) 0%, rgba(54, 92, 145, 1) 100%);">
-      <div class="card-body p-4">
-        <h4 class="h4 text-primary mb-4 text-white p-2">Módulos disponíveis</h4>
-
-        <div class="list-group gap-1">
-          <a class="modulo-card list-group-item list-group-item-action d-flex justify-content-between align-items-center fw-medium border-primary shadow-sm border-1 rounded-3 mb-4 p-2.5"
-             asp-controller="Curso" asp-action="Listar">
-            📚 Cursos
-            <span class="badge text-bg-primary rounded-pill">Abrir</span>
-          </a>
-
-          <a class="modulo-card list-group-item list-group-item-action d-flex justify-content-between align-items-center fw-medium border-primary shadow-sm border-1 rounded-3 mb-4 p-2.5"
-             asp-controller="Categoria" asp-action="Listar">
-            🏷️ Categorias
-            <span class="badge text-bg-primary rounded-pill">Abrir</span>
-          </a>
-
-          <a class="modulo-card list-group-item list-group-item-action d-flex justify-content-between align-items-center fw-medium border-primary shadow-sm border-1 rounded-3 mb-4 p-2.5"
-             asp-controller="Turma" asp-action="Listar">
-            👥 Turmas
-            <span class="badge text-bg-primary rounded-pill">Abrir</span>
-          </a>
-
-          <a class="modulo-card list-group-item list-group-item-action d-flex justify-content-between align-items-center fw-medium border-primary shadow-sm border-1 rounded-3 mb-4 p-2.5"
-             asp-controller="Aluno" asp-action="Listar">
-            🎓 Alunos
-            <span class="badge text-bg-primary rounded-pill">Abrir</span>
-          </a>
-
-          <a class="modulo-card list-group-item list-group-item-action d-flex justify-content-between align-items-center fw-medium border-primary shadow-sm border-1 rounded-3 mb-4 p-2.5"
-             asp-controller="Instrutor" asp-action="Listar">
-            👨‍🏫 Instrutores
-            <span class="badge text-bg-primary rounded-pill">Abrir</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
+  <div class="col-lg-7 hero-visual">
+    <img src="~/img/students.png" alt="Ilustração de estudantes" class="hero-img" />
   </div>
-</div>
+</section>

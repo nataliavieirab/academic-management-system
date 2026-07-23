@@ -6,7 +6,7 @@ ViewBag.Info = "Confirme a exclusão deste instrutor.";
 
 @model ExcluirInstrutorViewModel;
 
-<form class="card border-primary-subtle shadow-sm mx-auto p-4 bg-transparent" style="max-width: 620px;"
+<form class="card border shadow-sm mx-auto p-4" style="max-width: 620px;"
     asp-action="Excluir" asp-route-id="@Model.Id" method="post">
     <div class="alert alert-warning border-start border-primary border-1 rounded-3" role="alert">
         Deseja realmente excluir este instrutor?

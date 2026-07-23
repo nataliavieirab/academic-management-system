@@ -10,18 +10,17 @@
   ViewBag.ActionBotao = "Cadastrar";
 }
 
-@* <div class="card border-primary-subtle rounded-2 shadow-sm mx-auto p-4 bg-transparent"> *@
 <form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4 mt-1">
 
   <div class="col-md-4">
-    <label asp-for="CursoId" class="form-label fw-semibold text-secondary small">Curso</label>
+    <label asp-for="CursoId" class="form-label fw-semibold text-body-secondary small">Curso</label>
     <select asp-for="CursoId" class="form-select"
       asp-items='@(new SelectList(Model.Cursos ?? new List<OpcaoCursoViewModel>(), "Id", "Titulo"))'>
       <option value="">Todos</option>
     </select>
   </div>
   <div class="col-md-4">
-    <label asp-for="Situacao" class="form-label fw-semibold text-secondary small">Matrícula</label>
+    <label asp-for="Situacao" class="form-label fw-semibold text-body-secondary small">Matrícula</label>
     <select asp-for="Situacao" class="form-select" asp-items="Html.GetEnumSelectList<SituacaoAluno>()">
       <option value="">Todas</option>
     </select>
@@ -62,18 +61,18 @@ else
             <hr class="my-1">
 
             <dl class="row g-2 mb-4 mt-2">
-              <dt class="col-4 text-secondary fw-bold">CPF:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">CPF:</dt>
               <dd class="col-8 mb-0 text-break">@a.Cpf</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Telefone</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Telefone</dt>
               <dd class="col-8 mb-0 text-break">
                 @a.Telefone
               </dd>
 
-              <dt class="col-4 text-secondary fw-bold">E-mail:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">E-mail:</dt>
               <dd class="col-8 mb-0 text-break">@a.Email</dd>
 
-              <dt class="col-4 text-secondary fw-bold">Endereço:</dt>
+              <dt class="col-4 text-body-secondary fw-bold">Endereço:</dt>
               <dd class="col-8 mb-0 text-break">@a.Endereco</dd>
             </dl>
 
