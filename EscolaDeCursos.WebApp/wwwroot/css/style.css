@@ -2,9 +2,12 @@
   --brand-orange-start: #fb923c;
   --brand-orange-end: #ea580c;
   --brand-mint: #bff0e4;
+  --brand-mint-start: 	#80e4cc;
+  --brand-mint-end: #2a9d8f	;
   --brand-ink: #1a2b28;
   --brand-muted: #6b7280;
   --brand-gradient: linear-gradient(180deg, var(--brand-orange-start), var(--brand-orange-end));
+  --brand-mint-gradient: linear-gradient(180deg, var(--brand-mint-start), var(--brand-mint-end));
 
   --bs-primary: #ea580c;
   --bs-primary-rgb: 234, 88, 12;
@@ -33,7 +36,7 @@ body {
 
 /* Fundo geométrico (Index, Entrar, Registrar) */
 body.page-mint {
-  background: #ffffff;
+  background: white;
 }
 
 body.page-mint::before,
@@ -97,6 +100,40 @@ body.page-mint::after {
 .btn-primary.active,
 .show > .btn-primary.dropdown-toggle {
   background-image: linear-gradient(180deg, #f97316, #9a3412);
+  color: #fff;
+  border: none;
+}
+
+.btn-mint {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-focus-shadow-rgb: 42, 157, 143;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: transparent;
+  --bs-btn-active-border-color: transparent;
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--brand-mint-start);
+  --bs-btn-disabled-border-color: transparent;
+  background-image: var(--brand-mint-gradient);
+  border: none;
+  border-radius: var(--bs-border-radius);
+  box-shadow: 0 4px 10px rgba(42, 157, 143, 0.28);
+}
+
+.btn-mint:hover,
+.btn-mint:focus-visible {
+  background-image: linear-gradient(180deg, #9eebd8, #238f81);
+  color: #fff;
+  border: none;
+}
+
+.btn-mint:active,
+.btn-mint.active {
+  background-image: linear-gradient(180deg, #6fd4be, #1b7a6e);
   color: #fff;
   border: none;
 }
@@ -166,7 +203,8 @@ body.page-mint::after {
 .site-navbar {
   position: relative;
   z-index: 1030;
-  background: transparent;
+  /* background: white; */
+  background: white;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(26, 43, 40, 0.06);
   padding-top: 0.85rem;
