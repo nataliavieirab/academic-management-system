@@ -19,7 +19,7 @@ public sealed class AutenticacaoController(
     public ActionResult Registrar()
     {
         if (signInManager.IsSignedIn(User))
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Home");
 
         return View();
     }
@@ -28,7 +28,7 @@ public sealed class AutenticacaoController(
     public async Task<ActionResult> Registrar(RegistrarViewModel viewModel)
     {
         if (signInManager.IsSignedIn(User))
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Home");
 
         if (!ModelState.IsValid)
             return View(viewModel);
@@ -62,14 +62,14 @@ public sealed class AutenticacaoController(
 
         await signInManager.SignInAsync(user, isPersistent: false);
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Home", "Home");
     }
 
     [HttpGet]
     public ActionResult Entrar(string? returnUrl = null)
     {
         if (signInManager.IsSignedIn(User))
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Home");
 
         ViewBag.ReturnUrl = returnUrl;
 
@@ -80,7 +80,7 @@ public sealed class AutenticacaoController(
     public async Task<ActionResult> Entrar(EntrarViewModel viewModel)
     {
         if (signInManager.IsSignedIn(User))
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Home");
 
         if (!ModelState.IsValid)
             return View(viewModel);
@@ -97,7 +97,7 @@ public sealed class AutenticacaoController(
             if (Url.IsLocalUrl(viewModel.ReturnUrl))
                 return Redirect(viewModel.ReturnUrl);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Home");
         }
 
         if (resultado.IsLockedOut)
@@ -119,6 +119,6 @@ public sealed class AutenticacaoController(
     {
         await signInManager.SignOutAsync();
 
-        return RedirectToAction(nameof(Entrar));
+        return RedirectToAction("Index", "Home");
     }
 }

@@ -1,6 +1,6 @@
 @{
   Layout = "_Layout";
-  ViewData["BodyClass"] = "page-index";
+  ViewData["BodyClass"] = "page-mint";
 }
 
 <section class="row hero g-4 g-lg-5">
@@ -12,15 +12,8 @@
     </p>
 
     <div class="d-flex flex-wrap align-items-center gap-3 hero-actions">
-      <a class="btn btn-primary btn-hero-primary" asp-controller="Curso" asp-action="Listar">Ver cursos</a>
-      @if (User.Identity?.IsAuthenticated != true)
-      {
-        <a class="link-hero-secondary" asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
-      }
-      else
-      {
-        <a class="link-hero-secondary" asp-controller="Turma" asp-action="Listar">Ver turmas</a>
-      }
+      <a class="btn btn-primary btn-hero-primary" asp-controller="Autenticacao" asp-action="Entrar">Entrar</a>
+      <a class="link-hero-secondary" asp-controller="Autenticacao" asp-action="Registrar">Criar Conta</a>
     </div>
 
     @* <ul class="hero-dots" aria-hidden="true">

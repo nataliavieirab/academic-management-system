@@ -31,13 +31,13 @@ body {
   );
 }
 
-/* Fundo geométrico só na Home (Index) */
-body.page-index {
+/* Fundo geométrico (Index, Entrar, Registrar) */
+body.page-mint {
   background: #ffffff;
 }
 
-body.page-index::before,
-body.page-index::after {
+body.page-mint::before,
+body.page-mint::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -47,12 +47,12 @@ body.page-index::after {
 }
 
 /* Painel mint à direita (diagonal do topo ~65% até o centro da base) */
-body.page-index::before {
+body.page-mint::before {
   clip-path: polygon(65% 0%, 100% 0%, 100% 100%, 50% 100%);
 }
 
 /* Triângulo mint no canto inferior esquerdo */
-body.page-index::after {
+body.page-mint::after {
   clip-path: polygon(0% 65%, 0% 100%, 25% 100%);
 }
 
@@ -229,7 +229,7 @@ body.page-index::after {
 
 /* ---------- Home hero ---------- */
 
-body.page-index {
+body.page-mint {
   min-height: 100vh;
 }
 
@@ -272,6 +272,7 @@ body.page-index {
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 0.2em;
+  padding-top: 1rem;
 }
 
 .link-hero-secondary:hover,
