@@ -15,29 +15,45 @@
   --bs-body-color: var(--brand-ink);
   --bs-heading-color: var(--brand-ink);
   --bs-secondary-color: var(--brand-muted);
-  --bs-border-radius: 0.75rem;
+  --bs-border-radius: 0.65rem;
 }
 
 body {
+  position: relative;
   min-height: 100vh;
   font-family: var(--bs-body-font-family);
   color: var(--brand-ink);
-
-  /* background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%); */
-
-  /* background: #E3FDF5;
-  background: linear-gradient(
-    to right,
-    #fffff0, #E3FDF5
-  ); */
-
   background: #dfe9f3;
   background: linear-gradient(
     to right,
-    #dfe9f3,#ffffff
+    #dfe9f3,
+    #ffffff
   );
+}
 
-  background-attachment: fixed;
+/* Fundo geométrico só na Home (Index) */
+body.page-index {
+  background: #ffffff;
+}
+
+body.page-index::before,
+body.page-index::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--brand-mint);
+}
+
+/* Painel mint à direita (diagonal do topo ~65% até o centro da base) */
+body.page-index::before {
+  clip-path: polygon(65% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+
+/* Triângulo mint no canto inferior esquerdo */
+body.page-index::after {
+  clip-path: polygon(0% 65%, 0% 100%, 25% 100%);
 }
 
 .page-title {
@@ -66,7 +82,7 @@ body {
   --bs-btn-disabled-border-color: transparent;
   background-image: var(--brand-gradient);
   border: none;
-  border-radius: 999px;
+  border-radius: var(--bs-border-radius);
   box-shadow: 0 8px 20px rgba(234, 88, 12, 0.22);
 }
 
@@ -95,7 +111,7 @@ body {
   --bs-btn-active-color: var(--brand-ink);
   --bs-btn-active-bg: #f1f5f9;
   --bs-btn-active-border-color: #94a3b8;
-  border-radius: 999px;
+  border-radius: var(--bs-border-radius);
 }
 
 .btn:focus-visible {
@@ -182,7 +198,7 @@ body {
   line-height: 1.2;
   color: var(--brand-ink);
   font-weight: 500;
-  border-radius: 999px;
+  border-radius: var(--bs-border-radius);
   transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -218,10 +234,15 @@ body.page-index {
 }
 
 .hero {
-  align-items: center;
-  padding-top: 2rem;
+  align-items: flex-start;
+  overflow: visible;
+  padding-top: 3.5rem;
   padding-bottom: 2rem;
   min-height: calc(100vh - 5.5rem);
+}
+
+.hero-copy {
+  padding-top: 1rem;
 }
 
 .hero-title {
@@ -282,15 +303,20 @@ body.page-index {
 
 .hero-visual {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+  overflow: visible;
+  align-self: stretch;
 }
 
 .hero-img {
   display: block;
-  width: 100%;
-  max-width: 2000px;
+  width:  min(78vw, 1080px);
+  max-width: none;
+  max-height: 76vh;
   height: auto;
+  object-fit: contain;
+  margin-right: -4rem;
   pointer-events: none;
   user-select: none;
 }
@@ -339,10 +365,16 @@ nav {
 
 @media (max-width: 991.98px) {
   .hero {
+    align-items: center;
+    overflow: hidden;
     min-height: auto;
     padding-top: 1.5rem;
     padding-bottom: 2.5rem;
     text-align: center;
+  }
+
+  .hero-copy {
+    padding-top: 0;
   }
 
   .hero-lead {
@@ -359,7 +391,17 @@ nav {
   }
 
   .hero-visual {
+    align-items: center;
+    justify-content: center;
     margin-top: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    margin-right: 0;
   }
 
   .site-navbar .navbar-nav {

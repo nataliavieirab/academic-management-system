@@ -62,7 +62,7 @@ else
 
             <dl class="row g-2 mb-4 mt-2">
               <dt class="col-4 text-body-secondary fw-bold">Matrícula:</dt>
-              <dd class="col-8 mb-0"><span class="badge text-bg-primary rounded-pill">@m.Id.ToString()[..8]</span></dd>
+              <dd class="col-8 mb-0"><span class="badge text-bg-primary rounded-2">@m.Id.ToString()[..8]</span></dd>
 
               <dt class="col-4 text-body-secondary fw-bold">Data:</dt>
               <dd class="col-8 mb-0">@m.Data.ToString("dd/MM/yyyy")</dd>
@@ -78,7 +78,7 @@ else
                     _ => "text-bg-secondary"
                   };
                 }
-                <span class="badge @situacaoBadge rounded-pill">@m.Situacao</span>
+                <span class="badge @situacaoBadge rounded-2">@m.Situacao</span>
               </dd>
             </dl>
 
